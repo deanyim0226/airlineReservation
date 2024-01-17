@@ -1,8 +1,6 @@
 package com.example.airlinesreservation.domain;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +30,5 @@ public class Passenger {
 
     @Embedded
     private Address address;
-
-
 
 }
