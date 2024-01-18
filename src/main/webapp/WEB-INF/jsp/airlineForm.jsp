@@ -25,47 +25,55 @@
         </ul>
     </nav>
 </header>
+
 <div align="center">
-
-    <h1>ROLE FORM</h1>
-    <f:form action="saveRole" method="post" modelAttribute="role">
-        <table>
-            <tr>
-                <td>ROLE-ID</td>
-                <td><f:input path="roleId"/></td>
-            </tr>
-            <tr>
-                <td>NAME</td>
-                <td><f:input path="roleName"/></td>
-            </tr>
-            <tr>
-                <td>DESCRIPTION</td>
-                <td><f:input path="description"/></td>
-            </tr>
-
-        </table>
+    <h1>AIRLINE FORM</h1>
+    <f:form modelAttribute="airline" method="post" action="saveAirline">
+    <table>
+        <tr>
+            <td>AIRLINE-ID</td>
+            <td><f:input path="airlineId"/></td>
+        </tr>
+        <tr>
+            <td>NAME</td>
+            <td><f:input path="airlineName"/></td>
+        </tr>
+        <tr>
+            <td>AIRLINE-CODE</td>
+            <td><f:input path="airlineCode"/></td>
+        </tr>
+        <tr>
+            <td>FLIGHT INFO</td>
+            <td><f:input path="airlineFlight"/></td>
+        </tr>
+    </table>
         <input type="submit" value="submit">
     </f:form>
 </div>
-
 <div align="center">
-    <h2>ROLE RECORD</h2>
     <table class="table table-primary table-striped">
         <tr>
-            <th>ROLE-ID</th>
+            <th>AIRLINE-ID</th>
             <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th colspan="2">OPTION</th>
+            <th>AIRLINE-CODE</th>
+            <th>FLIGHT-INFO</th>
+            <th colspan="2">
+                ACTION
+            </th>
         </tr>
-        <c:forEach items="${roles}" var="role">
+        <c:forEach items="${airlines}" var="airline">
+
             <tr>
-                <td>${role.getRoleId()}</td>
-                <td>${role.getRoleName()}</td>
-                <td>${role.getDescription()}</td>
-                <td><a href="/updateRole?roleId=${role.getRoleId()}">UPDATE</a></td>
-                <td><a href="/deleteRole?roleId=${role.getRoleId()}">DELETE</a></td>
+                <td>${airline.getAirlineId()}</td>
+                <td>${airline.getAirlineName()}</td>
+                <td>${airline.getAirlineCode()}</td>
+                <td>${airline.getAirlineFlight()}</td>
+                <td><a href="updateAirline?airlineId=${airline.getAirlineId()}">UPDATE</a></td>
+                <td><a href="deleteAirline?airlineId=${airline.getAirlineId()}">DELETE</a></td>
             </tr>
         </c:forEach>
+
+
     </table>
 </div>
 </body>

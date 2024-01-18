@@ -3,6 +3,7 @@ package com.example.airlinesreservation.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class Flight {
     private String flightNumber;
 
     @ManyToOne
+    @JoinColumn(name = "airlineId")
     private Airline flightAirline;
 
     private String departureCity;

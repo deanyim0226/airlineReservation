@@ -74,7 +74,7 @@ public class RoleController {
             return mav;
         }
 
-        //roleService.deleteRole(roleId);
+        //roleService.deleteById(roleId);
         mav.addObject("roles", roleService.findAll());
         return mav;
     }

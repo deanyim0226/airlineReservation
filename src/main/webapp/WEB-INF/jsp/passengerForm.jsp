@@ -19,7 +19,9 @@
             <li > <a  class="btn btn-primary dropdown"  href="userForm">USER FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="roleForm">ROLE FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="passengerForm">PASSENGER FORM</a></li>
-
+            <li > <a  class="btn btn-primary dropdown"  href="airportForm">AIRPORT FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="flightForm">FLIGHT FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="airlineForm">AIRLINE FORM</a></li>
         </ul>
     </nav>
 </header>
@@ -68,19 +70,19 @@
                 <td><f:input path="address.addressLine2"/></td>
             </tr>
             <tr>
-                <td>ADDRESS LINE1</td>
+                <td>CITY</td>
                 <td><f:input path="address.city"/></td>
             </tr>
             <tr>
-                <td>ADDRESS LINE1</td>
+                <td>STATE</td>
                 <td><f:input path="address.state"/></td>
             </tr>
             <tr>
-                <td>ADDRESS LINE1</td>
+                <td>ZIPCODE</td>
                 <td><f:input path="address.zipcode"/></td>
             </tr>
             <tr>
-                <td>ADDRESS LINE1</td>
+                <td>COUNTRY</td>
                 <td><f:input path="address.country"/></td>
             </tr>
         </table>
@@ -98,6 +100,7 @@
                 <th>GENDER</th>
                 <th>DOB</th>
                 <th>ADDRESS</th>
+                <th colspan="2">ACTION</th>
             </tr>
 
             <c:forEach items="${passengers}" var="passenger">
@@ -108,9 +111,11 @@
                     <td>${passenger.getEmail()}</td>
                     <td>${passenger.getGender()}</td>
                     <td>${passenger.getDOB()}</td>
-                    <td>                        ${passenger.getCustomerAddress().getAddressLine1()} ${passenger.getCustomerAddress().getAddressLine2()},
-                            ${passenger.getCustomerAddress().getCity()}, ${passenger.getCustomerAddress().getState()}, ${passenger.getCustomerAddress().getZipcode()}, ${passenger.getCustomerAddress().getCountry()}
+                    <td>                        ${passenger.getAddress().getAddressLine1()} ${passenger.getAddress().getAddressLine2()},
+                            ${passenger.getAddress().getCity()}, ${passenger.getAddress().getState()}, ${passenger.getAddress().getZipcode()}, ${passenger.getAddress().getCountry()}
                     </td>
+                    <td><a href="updatePassenger?passengerId=${passenger.getPassengerId()}">UPDATE</a></td>
+                    <td><a href="deletePassenger?passengerId=${passenger.getPassengerId()}">DELETE</a></td>
                 </tr>
             </c:forEach>
         </table>

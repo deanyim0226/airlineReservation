@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>User Form</title>
+    <title>AIRPORT Form</title>
 </head>
 <body>
 <header>
@@ -25,45 +25,50 @@
         </ul>
     </nav>
 </header>
+
 <div align="center">
-
-    <h1>ROLE FORM</h1>
-    <f:form action="saveRole" method="post" modelAttribute="role">
-        <table>
-            <tr>
-                <td>ROLE-ID</td>
-                <td><f:input path="roleId"/></td>
-            </tr>
-            <tr>
-                <td>NAME</td>
-                <td><f:input path="roleName"/></td>
-            </tr>
-            <tr>
-                <td>DESCRIPTION</td>
-                <td><f:input path="description"/></td>
-            </tr>
-
-        </table>
+    <h1>AIRPORT FORM</h1>
+    <f:form modelAttribute="airport" action="saveAirport" method="post">
+    <table>
+        <tr>
+            <td>AIRPORT-ID</td>
+            <td><f:input path="airportId"/></td>
+        </tr>
+        <tr>
+            <td>AIRPORT-CODE</td>
+            <td><f:input path="airportCode"/></td>
+        </tr>
+        <tr>
+            <td>NAME</td>
+            <td><f:input path="airportName"/></td>
+        </tr>
+        <tr>
+            <td>CITY</td>
+            <td><f:input path="airportCity"/></td>
+        </tr>
+    </table>
         <input type="submit" value="submit">
     </f:form>
 </div>
-
 <div align="center">
-    <h2>ROLE RECORD</h2>
+    <h2>AIRPORT RECORD</h2>
     <table class="table table-primary table-striped">
         <tr>
-            <th>ROLE-ID</th>
+            <th>AIRPORT-ID</th>
+            <th>AIRPORT-CODE</th>
             <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th colspan="2">OPTION</th>
+            <th>CITY</th>
+            <th colspan="2">ACTION</th>
         </tr>
-        <c:forEach items="${roles}" var="role">
+
+        <c:forEach items="${airports}" var="airport">
             <tr>
-                <td>${role.getRoleId()}</td>
-                <td>${role.getRoleName()}</td>
-                <td>${role.getDescription()}</td>
-                <td><a href="/updateRole?roleId=${role.getRoleId()}">UPDATE</a></td>
-                <td><a href="/deleteRole?roleId=${role.getRoleId()}">DELETE</a></td>
+                <td>${airport.getAirportId()}</td>
+                <td>${airport.getAirportCode()}</td>
+                <td>${airport.getAirportName()}</td>
+                <td>${airport.getAirportCity()}</td>
+                <td><a href="updateAirport?airportId=${airport.getAirportId()}">UPDATE</a></td>
+                <td><a href="deleteAirport?airportId=${airport.getAirportId()}">DELETE</a></td>
             </tr>
         </c:forEach>
     </table>

@@ -19,6 +19,9 @@
             <li > <a  class="btn btn-primary dropdown"  href="userForm">USER FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="roleForm">ROLE FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="passengerForm">PASSENGER FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="airportForm">AIRPORT FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="flightForm">FLIGHT FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="airlineForm">AIRLINE FORM</a></li>
         </ul>
     </nav>
 </header>

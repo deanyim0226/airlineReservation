@@ -35,10 +35,11 @@ public class PassengerController {
 
         if(br.hasErrors()){
             //error while entering passenger info from user
+            return mav;
         }
 
         passengerService.savePassenger(passenger);
-        mav.setViewName("redirect/passengerForm");
+        mav.setViewName("redirect:passengerForm");
         return mav;
     }
 
@@ -56,6 +57,7 @@ public class PassengerController {
         }
 
         mav.addObject("passenger",retrievedPassenger);
+        mav.addObject("genders",Gender.values());
         mav.addObject("passengers",passengerService.findAll());
 
         return mav;
