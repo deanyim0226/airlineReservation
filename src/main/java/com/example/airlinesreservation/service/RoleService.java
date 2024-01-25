@@ -13,4 +13,6 @@ public interface RoleService {
     public Role saveRole(Role role);
 
     public void deleteById(Long roleId);
+
+    public Role findByRoleName(String roleName);
 }

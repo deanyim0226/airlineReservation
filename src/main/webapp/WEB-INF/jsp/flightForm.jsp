@@ -22,6 +22,8 @@
             <li > <a  class="btn btn-primary dropdown"  href="airportForm">AIRPORT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="flightForm">FLIGHT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="airlineForm">AIRLINE FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="reservationForm">RESERVATION FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="searchForm">SEARCH FLIGHT</a></li>
         </ul>
     </nav>
 </header>
@@ -43,8 +45,9 @@
                 <td>
                 <f:select path="flightAirline">
                 <c:forEach items="${availableAirlines}" var="airline">
-                    <f:option label="${airline.getAirlineName()}" value="${airline.getAirlineId()}"/>
+                    <f:option label="${airline.getAirlineName()}" value="${airline.getAirlineId()}" selected="true"/>
                 </c:forEach>
+
                 </f:select>
                 </td>
             </tr>
@@ -90,7 +93,7 @@
     </f:form>
 
 </div>
-<div align="center">
+<div class="container-fluid" align="center">
     <h2>FLIGHT RECORD</h2>
     <table class="table table-primary table-striped">
         <tr>

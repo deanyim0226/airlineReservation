@@ -10,53 +10,96 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>User Form</title>
+    <script>
+        $(document).ready(function(){
+            $("#addUser").click(function(){
+                $("#modal_userId").val("")
+                $("#modal_email").val("")
+                $("#modal_username").val("")
+                $("#modal_password").val("")
+
+                $("#modal_userId").removeAttr("readonly")
+
+                $("#myModal").show()
+            })
+
+            $(".close").click(function(){
+                $("#myModal").hide()
+            })
+            $("#close").click(function(){
+                $("#myModal").hide()
+            })
+        })
+    </script>
 </head>
 <body>
 <header>
     <nav class="navbar bg-primary">
+        <a  class="btn btn-primary dropdown"  href="home">HOME</a>
         <ul class="nav justify-content-end">
-            <li > <a  class="btn btn-primary dropdown"  href="home">HOME</a></li>
+
             <li > <a  class="btn btn-primary dropdown"  href="userForm">USER FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="roleForm">ROLE FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="passengerForm">PASSENGER FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="airportForm">AIRPORT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="flightForm">FLIGHT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="airlineForm">AIRLINE FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="reservationForm">RESERVATION FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="searchForm">SEARCH FLIGHT</a></li>
         </ul>
     </nav>
 </header>
-    <div align="center">
 
-        <h1>USER FORM</h1>
-        <f:form action="saveUser" method="post" modelAttribute="user">
-            <table>
-                <tr>
-                    <td>USER-ID</td>
-                    <td><f:input path="userId"/></td>
-                </tr>
-                <tr>
-                    <td>USERNAME</td>
-                    <td><f:input path="username"/></td>
-                </tr>
-                <tr>
-                    <td>PASSWORD</td>
-                    <td><f:input path="password"/></td>
-                </tr>
-                <tr>
-                    <td>EMAIL</td>
-                    <td><f:input path="email"/></td>
-                </tr>
-                <tr>
-                    <td>MOBILE-NO</td>
-                    <td><f:input path="mobileNo"/></td>
-                </tr>
-            </table>
-            <input type="submit" value="submit">
-        </f:form>
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" >
+                <h4 class="modal-title">USER INFO</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
 
+                <f:form action="saveUser" method="POST" modelAttribute="user">
+                    <c:if test="${hasError}">
+                        <tr>
+                            <td>Errors</td>
+                            <td><f:errors path="*"></f:errors></td>
+                        </tr>
+                    </c:if>
+                    <div class="col">
+                        USER ID <f:input path="userId" class="form-control" type="number" id="modal_userId"/>
+                        NAME <f:input path="username" class="form-control" type="text" id="modal_username"/>
+                        PASSWORD<f:input path="password" class="form-control" type="password" id="modal_password"/>
+                        EMAIL <f:input path="email" class="form-control" type="text" id="modal_email"/>
+                        MOBILE-NO<<f:input class="form-control" path="mobileNo"  id="modal_mobileNo"/>
+
+                        <c:forEach items="${roles}" var="role" >
+
+                            <c:if test="${retrievedRole.contains(role)}">
+                                <f:checkbox class="checkbox1" path="roles" label="${role.getRoleName()}" value="${role.getRoleId()}" checked="ture"/>
+                            </c:if>
+
+                            <c:if test="${!retrievedRole.contains(role)}">
+                                <f:checkbox class="checkbox2" path="roles" label="${role.getRoleName()}" value="${role.getRoleId()}"/>
+                            </c:if>
+
+                        </c:forEach>
+
+                        <input style="margin-top:25px" class="btn form-control btn-primary" type="submit" id="" value="submit"/>
+                    </div>
+                </f:form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div align="center">
+<div class="container-fluid" align="center">
         <h2>USER RECORD</h2>
         <table class="table table-primary table-striped">
             <tr>
@@ -65,7 +108,8 @@
                 <th>PASSWORD</th>
                 <th>EMAIL</th>
                 <th>MOBILE-NO</th>
-                <th colspan="2">ACTION</th>
+                <th >ACTION</th>
+                <th><button class="btn btn-success" id="addUser">ADD</button></th>
             </tr>
 
             <c:forEach items="${users}" var="user">

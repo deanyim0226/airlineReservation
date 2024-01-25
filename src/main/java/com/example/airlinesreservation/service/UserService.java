@@ -14,9 +14,13 @@ public interface UserService {
 
     public User findById(Long userId);
 
+    public void registerUser(User user);
+
     public User saveUser(User user);
 
     public void deleteById(Long userId);
+
+    public void updateUser(User user);
 
     public User findByUsername(String username);
 }

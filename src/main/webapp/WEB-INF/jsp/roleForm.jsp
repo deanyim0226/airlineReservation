@@ -10,6 +10,29 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>User Form</title>
+
+    <script>
+        $(document).ready(function(){
+
+            $("#addRole").click(function(){
+
+                $("#modal_roleId").attr("readonly",false)
+
+                $("#modal_roleId").val("")
+                $("#modal_roleName").val("")
+                $("#modal_roleDescription").val("")
+
+                $("#myModal").toggle()
+            })
+
+            $(".close").click(function(){
+                $("#myModal").hide()
+            })
+            $("#close").click(function(){
+                $("#myModal").hide()
+            })
+        })
+    </script>
 </head>
 <body>
 <header>
@@ -22,40 +45,48 @@
             <li > <a  class="btn btn-primary dropdown"  href="airportForm">AIRPORT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="flightForm">FLIGHT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="airlineForm">AIRLINE FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="reservationForm">RESERVATION FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="searchForm">SEARCH FLIGHT</a></li>
         </ul>
     </nav>
 </header>
-<div align="center">
 
-    <h1>ROLE FORM</h1>
-    <f:form action="saveRole" method="post" modelAttribute="role">
-        <table>
-            <tr>
-                <td>ROLE-ID</td>
-                <td><f:input path="roleId"/></td>
-            </tr>
-            <tr>
-                <td>NAME</td>
-                <td><f:input path="roleName"/></td>
-            </tr>
-            <tr>
-                <td>DESCRIPTION</td>
-                <td><f:input path="description"/></td>
-            </tr>
-
-        </table>
-        <input type="submit" value="submit">
-    </f:form>
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" >
+                <h4 class="modal-title">ROLE INFO</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <f:form action="saveRole" method="POST" modelAttribute="role">
+                    <div class="col">
+                        ROLE ID <f:input path="roleId" readonly="true" class="form-control" type="text" id="modal_roleId"/>
+                        ROLE <f:input path="roleName" class="form-control" type="text" id="modal_roleName"/>
+                        DESCRIPTION <f:input path="description" class="form-control" type="text" id="modal_roleDescription"/>
+                        <input style="margin-top:25px" class="btn form-control btn-primary" type="submit" id="" value="submit"/>
+                    </div>
+                </f:form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div align="center">
+<div class="container-fluid" align="center">
     <h2>ROLE RECORD</h2>
     <table class="table table-primary table-striped">
         <tr>
             <th>ROLE-ID</th>
             <th>NAME</th>
             <th>DESCRIPTION</th>
-            <th colspan="2">OPTION</th>
+            <th >OPTION</th>
+            <th><button class="btn btn-success" id="addRole">ADD</button></th>
         </tr>
         <c:forEach items="${roles}" var="role">
             <tr>

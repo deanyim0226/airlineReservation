@@ -1,7 +1,10 @@
 package com.example.airlinesreservation.controller.mav;
 
 import com.example.airlinesreservation.domain.Airline;
+import com.example.airlinesreservation.domain.Flight;
 import com.example.airlinesreservation.service.AirlineService;
+import com.example.airlinesreservation.service.FlightService;
+import org.eclipse.tags.shaded.org.apache.bcel.verifier.structurals.ControlFlowGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -10,15 +13,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Controller
 public class AirlineController {
 
     @Autowired
     AirlineService airlineService;
 
+    @Autowired
+    FlightService flightService;
+
     @RequestMapping(value = "/airlineForm")
     public ModelAndView airportForm(Airline airline){
         ModelAndView mav = new ModelAndView("airlineForm");
+
+        List<Flight> flightList = flightService.getAll();
+
+        List<Airline> airlineList = airlineService.getAll();
+        Set<Flight> matchedFlightList = new HashSet<>();
 
 
         mav.addObject("airlines", airlineService.getAll());

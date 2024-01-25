@@ -62,14 +62,20 @@ public class FlightController {
         ModelAndView mav = new ModelAndView("flightForm");
 
         Flight retrievedFlight = flightService.findById(flightId);
+        List<Airline> airlineList = airlineService.getAll();
 
         if(retrievedFlight == null){
             //flight does not exist
             return mav;
         }
 
+        /*
+        Things to do
+        add object for selected airline
+         */
         mav.addObject("flight",retrievedFlight);
         mav.addObject("flights", flightService.getAll());
+        mav.addObject("availableAirlines", airlineList);
 
         return mav;
     }

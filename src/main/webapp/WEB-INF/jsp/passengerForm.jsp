@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
     <title>User Form</title>
 </head>
 <body>
@@ -22,13 +23,16 @@
             <li > <a  class="btn btn-primary dropdown"  href="airportForm">AIRPORT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="flightForm">FLIGHT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="airlineForm">AIRLINE FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="reservationForm">RESERVATION FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="searchForm">SEARCH FLIGHT</a></li>
         </ul>
     </nav>
 </header>
-
+<br>
+<br>
     <div align="center">
         <h1>PASSENGER FORM</h1>
-        <f:form modelAttribute="passenger" method="post" action="savePassenger">
+        <f:form modelAttribute="passenger" method="post" action="savePassengerByAdmin">
         <table>
             <tr>
                 <td>PASSENGER-ID</td>
@@ -90,7 +94,7 @@
         </f:form>
     </div>
 
-    <div align="center">
+<div class="container-fluid" align="center">
         <table class="table table-primary table-striped">
             <tr>
                 <th>PASSENGER-ID</th>

@@ -28,52 +28,32 @@
     </nav>
 </header>
 
-<div align="center">
-    <h1>AIRLINE FORM</h1>
-    <f:form modelAttribute="airline" method="post" action="saveAirline">
-    <table>
-        <tr>
-            <td>AIRLINE-ID</td>
-            <td><f:input path="airlineId"/></td>
-        </tr>
-        <tr>
-            <td>NAME</td>
-            <td><f:input path="airlineName"/></td>
-        </tr>
-        <tr>
-            <td>AIRLINE-CODE</td>
-            <td><f:input path="airlineCode"/></td>
-        </tr>
 
-    </table>
-        <input type="submit" value="submit">
-    </f:form>
-</div>
 <div class="container-fluid" align="center">
+    <h2>RESERVATION RECORD</h2>
     <table class="table table-primary table-striped">
         <tr>
-            <th>AIRLINE-ID</th>
-            <th>NAME</th>
-            <th>AIRLINE-CODE</th>
+            <th>RESERVATION-ID</th>
+            <th>PASSENGER-INFO</th>
             <th>FLIGHT-INFO</th>
-            <th colspan="2">
-                ACTION
-            </th>
+            <th>CHECKED BAGS</th>
+            <th>CHECKED IN</th>
+            <th align="2">ACTION</th>
         </tr>
-        <c:forEach items="${airlines}" var="airline">
-
+        <c:forEach items="${reservations}" var="reservation">
             <tr>
-                <td>${airline.getAirlineId()}</td>
-                <td>${airline.getAirlineName()}</td>
-                <td>${airline.getAirlineCode()}</td>
-                <td>${airline.getAirlineFlight()}</td>
-                <td><a href="updateAirline?airlineId=${airline.getAirlineId()}">UPDATE</a></td>
-                <td><a href="deleteAirline?airlineId=${airline.getAirlineId()}">DELETE</a></td>
+
+                <td>${reservation.getReservationNumber()}</td>
+                <td>${reservation.getPassenger().getFirstName()} ${reservation.getPassenger().getLastName()}, ${reservation.getPassenger().getGender()} </td>
+                <td>${reservation.getFlight().getDepartureDate()} ${reservation.getFlight().getDepartureCity()} -> ${reservation.getFlight().getArrivalCity()} at ${reservation.getFlight().getDepartureTime()}</td>
+                <td>${reservation.getCheckedBags()}</td>
+                <td>${reservation.isCheckedIn()}</td>
+                <td><a href="updateReservation?reservationId=${reservation.getReservationNumber()}">UPDATE</a></td>
+                <td><a href="deleteReservation?reservationId=${reservation.getReservationNumber()}">DELETE</a></td>
             </tr>
         </c:forEach>
-
-
     </table>
+
 </div>
 </body>
 </html>
