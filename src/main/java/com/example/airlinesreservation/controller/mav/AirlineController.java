@@ -4,10 +4,15 @@ import com.example.airlinesreservation.domain.Airline;
 import com.example.airlinesreservation.domain.Flight;
 import com.example.airlinesreservation.service.AirlineService;
 import com.example.airlinesreservation.service.FlightService;
+import com.example.airlinesreservation.validation.AirlineValidator;
+import jakarta.validation.Valid;
 import org.eclipse.tags.shaded.org.apache.bcel.verifier.structurals.ControlFlowGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +32,15 @@ public class AirlineController {
     @Autowired
     FlightService flightService;
 
+    @Autowired
+    AirlineValidator airlineValidator;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+
+        binder.addValidators(airlineValidator);
+    }
+
     @RequestMapping(value = "/airlineForm")
     public ModelAndView airportForm(Airline airline){
         ModelAndView mav = new ModelAndView("airlineForm");
@@ -42,12 +56,21 @@ public class AirlineController {
     }
 
     @RequestMapping(value = "/saveAirline")
-    public ModelAndView saveAirport(@ModelAttribute Airline airline, BindingResult br){
+    public ModelAndView saveAirport(@Valid @ModelAttribute Airline airline, BindingResult br){
 
         ModelAndView mav = new ModelAndView("airlineForm");
+        StringBuilder sb = new StringBuilder();
 
         if(br.hasErrors()){
             //error while entering airport info from user
+            List<FieldError> errors =  br.getFieldErrors();
+
+            for(FieldError error : errors){
+                sb.append(error.getDefaultMessage() + "\n");
+            }
+
+            System.out.println(sb.toString());
+            mav.addObject("hasError",true);
             return mav;
         }
 

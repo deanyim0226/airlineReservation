@@ -76,7 +76,6 @@ h3.sub-heading-agileits {
 .booking-form-w3layouts input[type="text"],
 .booking-form-w3layouts input[type="email"],
 .booking-form-w3layouts textarea,
-select.form-control,
 input#datepicker {
     width: 100%;
     font-weight: 300;
@@ -105,9 +104,6 @@ input#datepicker {
     width: 100%;
 }
 
-select.form-control option {
-    background: #000;
-}
 
 .booking-form-w3layouts input[type="submit"],
 .booking-form-w3layouts input[type="reset"] {
@@ -240,7 +236,6 @@ ul.radio-buttons-w3-agileits li {
     .booking-form-w3layouts input[type="text"],
     .booking-form-w3layouts input[type="email"],
     .booking-form-w3layouts textarea,
-    select.form-control,
     input#datepicker {
         padding: 8px 10px;
     }

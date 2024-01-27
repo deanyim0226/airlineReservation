@@ -34,11 +34,19 @@
         <table>
             <tr>
                 <td>FLIGHT-ID</td>
-                <td><f:input path="flightId"/></td>
+                <td><f:input path="flightId"/>
+                <c:if test="${hasError}">
+                    <f:errors path="flightId"></f:errors>
+                </c:if>
+                </td>
             </tr>
             <tr>
                 <td>FLIGHT-NUMBER</td>
-                <td><f:input path="flightNumber"/></td>
+                <td><f:input path="flightNumber"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="flightNumber"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>AIRLINE</td>
@@ -47,21 +55,35 @@
                 <c:forEach items="${availableAirlines}" var="airline">
                     <f:option label="${airline.getAirlineName()}" value="${airline.getAirlineId()}" selected="true"/>
                 </c:forEach>
-
+                    <c:if test="${hasError}">
+                        <f:errors path="flightAirline"></f:errors>
+                    </c:if>
                 </f:select>
                 </td>
             </tr>
             <tr>
                 <td>DEPARTURE</td>
-                <td><f:input path="departureCity"/></td>
+                <td><f:input path="departureCity"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="departureCity"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>ARRIVAL</td>
-                <td><f:input path="arrivalCity"/></td>
+                <td><f:input path="arrivalCity"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="arrivalCity"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>DEPARTURE-DATE</td>
-                <td><f:input type="date" path="departureDate"/></td>
+                <td><f:input type="date" path="departureDate"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="departureDate"></f:errors>
+                    </c:if>
+                </td>
             </tr>
 
             <tr>
@@ -70,7 +92,11 @@
             </tr>
             <tr>
                 <td>ARRIVAL-DATE</td>
-                <td><f:input type="date" path="arrivalDate"/></td>
+                <td><f:input type="date" path="arrivalDate"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="arrivalDate"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>ARRIVAL-TIME</td>

@@ -34,19 +34,36 @@
     <table>
         <tr>
             <td>AIRPORT-ID</td>
-            <td><f:input path="airportId"/></td>
+            <td><f:input path="airportId"/>
+                <c:if test="${hasError}" >
+                    <f:errors path="airportId"></f:errors>
+                </c:if>
+
+            </td>
         </tr>
         <tr>
             <td>AIRPORT-CODE</td>
-            <td><f:input path="airportCode"/></td>
+            <td><f:input path="airportCode"/>
+                <c:if test="${hasError}" >
+                    <f:errors path="airportCode"></f:errors>
+                </c:if>
+            </td>
         </tr>
         <tr>
             <td>NAME</td>
-            <td><f:input path="airportName"/></td>
+            <td><f:input path="airportName"/>
+                <c:if test="${hasError}" >
+                    <f:errors path="airportName"></f:errors>
+                </c:if>
+            </td>
         </tr>
         <tr>
             <td>CITY</td>
-            <td><f:input path="airportCity"/></td>
+            <td><f:input path="airportCity"/>
+                <c:if test="${hasError}" >
+                    <f:errors path="airportCity"></f:errors>
+                </c:if>
+            </td>
         </tr>
     </table>
         <input type="submit" value="submit">

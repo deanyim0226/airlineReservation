@@ -1,6 +1,7 @@
 <%@page language="java" contentType="text/html; ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -34,15 +35,30 @@
     <table>
         <tr>
             <td>AIRLINE-ID</td>
-            <td><f:input path="airlineId"/></td>
+            <td><f:input path="airlineId"/>
+                <c:if test="${hasError}">
+                <f:errors path="airlineId"></f:errors>
+                </c:if>
+            </td>
+
         </tr>
         <tr>
             <td>NAME</td>
-            <td><f:input path="airlineName"/></td>
+            <td><f:input path="airlineName"/>
+                <c:if test="${hasError}">
+                <f:errors path="airlineName"></f:errors>
+                </c:if>
+            </td>
+
         </tr>
         <tr>
             <td>AIRLINE-CODE</td>
-            <td><f:input path="airlineCode"/></td>
+            <td><f:input path="airlineCode"/>
+                <c:if test="${hasError}">
+                    <f:errors path="airlineCode"></f:errors>
+                </c:if>
+            </td>
+
         </tr>
 
     </table>

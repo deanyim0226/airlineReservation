@@ -36,19 +36,35 @@
         <table>
             <tr>
                 <td>PASSENGER-ID</td>
-                <td><f:input path="passengerId"/></td>
+                <td><f:input path="passengerId"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="passengerId"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>FIRSTNAME</td>
-                <td><f:input path="firstName"/></td>
+                <td><f:input path="firstName"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="firstName"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>LASTNAME</td>
-                <td><f:input path="lastName"/></td>
+                <td><f:input path="lastName"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="lastName"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>EMAIL</td>
-                <td><f:input path="email"/></td>
+                <td><f:input path="email"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="email"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>GENDER</td>
@@ -57,17 +73,28 @@
                 <c:forEach items="${genders}" var="gender">
                     <f:option value="${gender}"></f:option>
                 </c:forEach>
+                    <c:if test="${hasError}">
+                        <f:errors path="gender"></f:errors>
+                    </c:if>
                 </f:select>
                 </td>
             </tr>
             <tr>
                 <td>DOB</td>
-                <td><f:input type="date" path="DOB"/></td>
+                <td><f:input type="date" path="DOB"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="DOB"></f:errors>
+                    </c:if>
+                </td>
             </tr>
 
             <tr>
                 <td>ADDRESS LINE1</td>
-                <td><f:input path="address.addressLine1"/></td>
+                <td><f:input path="address.addressLine1"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="address.addressLine1"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>ADDRESS LINE2</td>
@@ -75,19 +102,35 @@
             </tr>
             <tr>
                 <td>CITY</td>
-                <td><f:input path="address.city"/></td>
+                <td><f:input path="address.city"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="address.city"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>STATE</td>
-                <td><f:input path="address.state"/></td>
+                <td><f:input path="address.state"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="address.state"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>ZIPCODE</td>
-                <td><f:input path="address.zipcode"/></td>
+                <td><f:input path="address.zipcode"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="address.zipcode"></f:errors>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td>COUNTRY</td>
-                <td><f:input path="address.country"/></td>
+                <td><f:input path="address.country"/>
+                    <c:if test="${hasError}">
+                        <f:errors path="address.country"></f:errors>
+                    </c:if>
+                </td>
             </tr>
         </table>
             <input type="submit" value="submit">

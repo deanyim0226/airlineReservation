@@ -4,10 +4,14 @@ import com.example.airlinesreservation.domain.Airline;
 import com.example.airlinesreservation.domain.Flight;
 import com.example.airlinesreservation.service.AirlineService;
 import com.example.airlinesreservation.service.FlightService;
+import com.example.airlinesreservation.validation.FlightValidator;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +28,14 @@ public class FlightController {
     @Autowired
     AirlineService airlineService;
 
+    @Autowired
+    FlightValidator flightValidator;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        binder.addValidators(flightValidator);
+    }
+
 
     @RequestMapping(value = "flightForm")
     public ModelAndView flightForm(Flight flight){
@@ -36,7 +48,7 @@ public class FlightController {
     }
 
     @RequestMapping(value = "saveFlight")
-    public ModelAndView saveFlight(@ModelAttribute Flight flight, BindingResult br){
+    public ModelAndView saveFlight(@Valid @ModelAttribute Flight flight, BindingResult br){
         List<Airline> airlineList = airlineService.getAll();
         ModelAndView mav = new ModelAndView("flightForm");
         StringBuilder sb = new StringBuilder("");
@@ -48,9 +60,14 @@ public class FlightController {
                 sb = sb.append("\""+fieldError.getField() +"\":"+fieldError.getDefaultMessage()+"\n");
             }
             System.out.println("sb: " + sb );
+
+            mav.addObject("hasError",true);
+            mav.addObject("flights",flightService.getAll());
+            mav.addObject("availableAirlines", airlineList);
             return  mav;
         }
         System.out.println("saving flight " + flight.getFlightAirline());
+
         flightService.saveFlight(flight);
         mav.setViewName("redirect:flightForm");
         mav.addObject("flights",flightService.getAll());

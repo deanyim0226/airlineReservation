@@ -70,21 +70,32 @@
     <!-- Form starts here -->
     <f:form action="searchFlight" method="POST" modelAttribute="search">
         <h2 class="sub-heading-agileits">Search</h2>
+
         <div class="main-flex-w3ls-sectns">
             <div class="field-agileinfo-spc form-w3-agile-text1">
                 <label>From*</label>
-                <<f:input type="text" path="from" class="form-control" id="from"/>
+                <f:input type="text" path="from" class="form-control" id="from"/>
+                <c:if test="${hasError}">
+                    <f:errors path="from"></f:errors>
+                </c:if>
             </div>
             <div class="field-agileinfo-spc form-w3-agile-text2">
                 <label>To*</label>
-                <<f:input type="text" path="to" class="form-control" id="to"/>
+                <f:input type="text" path="to" class="form-control" id="to"/>
+                <c:if test="${hasError}">
+                    <f:errors path="to"></f:errors>
+                </c:if>
             </div>
+
         </div>
         <div class="main-flex-w3ls-sectns">
 
             <div class="field-agileinfo-spc form-w3-agile-text1">
                 <label>Dates*</label>
                 <<f:input type="date" path="date" class="form-control" id="date"/>
+                <c:if test="${hasError}">
+                    <f:errors path="date"></f:errors>
+                </c:if>
             </div>
 
         </div>
@@ -196,7 +207,7 @@
                         <td>
                             <f:select class="form-control" path="passenger.gender">
                                 <c:forEach items="${genders}" var="gender">
-                                    <f:option value="${gender}"></f:option>
+                                    <f:option class="form-control"  value="${gender}"></f:option>
                                 </c:forEach>
                             </f:select>
                         </td>
