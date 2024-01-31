@@ -2,6 +2,7 @@ package com.example.airlinesreservation.controller.mav;
 
 import com.example.airlinesreservation.domain.*;
 import com.example.airlinesreservation.service.FlightService;
+import com.example.airlinesreservation.service.ReservationService;
 import com.example.airlinesreservation.validation.SearchValidator;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.Valid;
@@ -27,30 +28,92 @@ public class SearchController {
     FlightService flightService;
 
     @Autowired
+    ReservationService reservationService;
+
+    @Autowired
     SearchValidator searchValidator;
+
+    List<Flight> filteredList;
+    List<Reservation> foundReservationList;
 
     @InitBinder
     public void initBinder(WebDataBinder binder){
         binder.addValidators(searchValidator);
     }
 
+    @RequestMapping("/searchReservationResult")
+    public ModelAndView searchReservationResult(Search search, Reservation reservation){
+        ModelAndView mav = new ModelAndView("searchReservationResult");
+        mav.addObject("reservations", foundReservationList);
 
+        return mav;
+    }
+    @RequestMapping("/searchReservation")
+    public ModelAndView searchReservation(@Valid @ModelAttribute Search search, BindingResult br){
+        ModelAndView mav = new ModelAndView("searchReservationForm");
+        //admin only to make check in for users
+        List<Reservation> reservationList = reservationService.getAll();
+        foundReservationList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
 
-    @RequestMapping("/searchForm")
+        Long reservationNumber = search.getReservationNumber();
+        String email = search.getPassengerEmail();
+
+        if(br.hasErrors()){
+            List<FieldError> errors = br.getFieldErrors();
+            for(FieldError error : errors){
+                sb.append(error.getDefaultMessage() + "\n");
+            }
+
+            System.out.println(sb.toString());
+            mav.addObject("hasError",true);
+            return mav;
+        }
+        for(Reservation rev : reservationList){
+            Passenger passenger = rev.getPassenger();
+            if(reservationNumber == rev.getReservationNumber()){
+                foundReservationList.add(rev);
+                break;
+
+            }else if(email.equals(passenger.getEmail())){
+                foundReservationList.add(rev);
+                //based on email
+            }
+
+        }
+
+        mav.setViewName("redirect:searchReservationResult");
+        return mav;
+    }
+
+    @RequestMapping("/searchReservationForm")
+    public ModelAndView reservationForm(Search search, Reservation reservation){
+        ModelAndView mav = new ModelAndView("searchReservationForm");
+
+        return mav;
+    }
+    @RequestMapping("/searchFlightResult")
+    public ModelAndView searchResult(Search search, Reservation reservation){
+        ModelAndView mav = new ModelAndView("searchFlightResult");
+        mav.addObject("flights", filteredList);
+        mav.addObject("genders", Gender.values());
+        return mav;
+    }
+
+    @RequestMapping("/searchFlightForm")
     public ModelAndView search(Search search, Reservation reservation){
-        ModelAndView mav = new ModelAndView("searchForm");
+        ModelAndView mav = new ModelAndView("searchFlightForm");
 
         return mav;
     }
 
     @RequestMapping("/searchFlight")
-    public ModelAndView searchFlight(@ModelAttribute Reservation reservation, @Valid @ModelAttribute Search search, BindingResult br){
-        ModelAndView mav = new ModelAndView("searchForm");
+    public ModelAndView searchFlight(@Valid @ModelAttribute Search search, BindingResult br){
+        ModelAndView mav = new ModelAndView("searchFlightForm");
         StringBuilder sb = new StringBuilder();
 
-
         List<Flight> flightList = flightService.getAll();
-        List<Flight> filteredList = new ArrayList<>();
+        filteredList = new ArrayList<>();
 
         String from = search.getFrom();
         String to = search.getTo();
@@ -65,6 +128,7 @@ public class SearchController {
             System.out.println(sb.toString());
             mav.addObject("hasError",true);
 
+            return  mav;
         }
 
         for(Flight flight : flightList){
@@ -76,9 +140,7 @@ public class SearchController {
             }
         }
 
-        mav.addObject("flights", filteredList);
-        mav.addObject("genders", Gender.values());
-
+        mav = new ModelAndView("redirect:searchFlightResult");
         return mav;
     }
 }

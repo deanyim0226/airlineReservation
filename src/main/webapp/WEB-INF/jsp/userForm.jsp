@@ -44,8 +44,8 @@
             <li > <a  class="btn btn-primary dropdown"  href="airportForm">AIRPORT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="flightForm">FLIGHT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="airlineForm">AIRLINE FORM</a></li>
-            <li > <a  class="btn btn-primary dropdown"  href="reservationForm">RESERVATION FORM</a></li>
-            <li > <a  class="btn btn-primary dropdown"  href="searchForm">SEARCH FLIGHT</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="searchReservationForm">RESERVATION FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="searchFlightForm">SEARCH FLIGHT</a></li>
         </ul>
     </nav>
 </header>
@@ -99,7 +99,7 @@
     </div>
 </div>
 
-<div class="container-fluid" align="center">
+<div class="container" align="center">
         <h2>USER RECORD</h2>
         <table class="table table-primary table-striped">
             <tr>

@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/style.css">
     <title>User Form</title>
+
 </head>
 <body>
 <header>
@@ -23,13 +24,32 @@
             <li > <a  class="btn btn-primary dropdown"  href="airportForm">AIRPORT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="flightForm">FLIGHT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="airlineForm">AIRLINE FORM</a></li>
-            <li > <a  class="btn btn-primary dropdown"  href="reservationForm">RESERVATION FORM</a></li>
-            <li > <a  class="btn btn-primary dropdown"  href="searchForm">SEARCH FLIGHT</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="searchReservationForm">RESERVATION FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="searchFlightForm">SEARCH FLIGHT</a></li>
         </ul>
     </nav>
 </header>
 <br>
 <br>
+<div class="booking-form-w3layouts">
+
+    <h2 class="sub-heading-agileits">Passenger Form</h2>
+
+    <div class="main-flex-w3ls-sectns">
+        <div class="field-agileinfo-spc form-w3-agile-text1">
+            <label>Reservation Number</label>
+
+        </div>
+        <div class="field-agileinfo-spc form-w3-agile-text2">
+            <label>Passenger Email</label>
+
+        </div>
+    </div>
+    <div class="main-flex-w3ls-sectns">
+        <input id="search-flight" type="submit" value="Find Reservation">
+    </div>
+</div>
+
     <div align="center">
         <h1>PASSENGER FORM</h1>
         <f:form modelAttribute="passenger" method="post" action="savePassengerByAdmin">

@@ -21,13 +21,6 @@
             overflow-y: auto;
         }
 
-        .booking-form-w3layouts {
-            box-sizing: border-box;
-            padding: 3em;
-            background: rgba(0, 0, 0, 0.78);
-            width: 50%;
-            margin: 0 auto;
-        }
     </style>
     <script>
         $(document).ready(function(){
@@ -60,84 +53,20 @@
             <li > <a  class="btn btn-primary dropdown"  href="airportForm">AIRPORT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="flightForm">FLIGHT FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="airlineForm">AIRLINE FORM</a></li>
-            <li > <a  class="btn btn-primary dropdown"  href="reservationForm">RESERVATION FORM</a></li>
-            <li > <a  class="btn btn-primary dropdown"  href="searchForm">SEARCH FLIGHT</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="searchReservationForm">RESERVATION FORM</a></li>
+            <li > <a  class="btn btn-primary dropdown"  href="searchFlightForm">SEARCH FLIGHT</a></li>
         </ul>
     </nav>
 </header>
 <br>
-<div class="booking-form-w3layouts">
-    <!-- Form starts here -->
-    <f:form action="searchFlight" method="POST" modelAttribute="search">
-        <h2 class="sub-heading-agileits">Search</h2>
 
-        <div class="main-flex-w3ls-sectns">
-            <div class="field-agileinfo-spc form-w3-agile-text1">
-                <label>From*</label>
-                <f:input type="text" path="from" class="form-control" id="from"/>
-                <c:if test="${hasError}">
-                    <f:errors path="from"></f:errors>
-                </c:if>
-            </div>
-            <div class="field-agileinfo-spc form-w3-agile-text2">
-                <label>To*</label>
-                <f:input type="text" path="to" class="form-control" id="to"/>
-                <c:if test="${hasError}">
-                    <f:errors path="to"></f:errors>
-                </c:if>
-            </div>
-
-        </div>
-        <div class="main-flex-w3ls-sectns">
-
-            <div class="field-agileinfo-spc form-w3-agile-text1">
-                <label>Dates*</label>
-                <<f:input type="date" path="date" class="form-control" id="date"/>
-                <c:if test="${hasError}">
-                    <f:errors path="date"></f:errors>
-                </c:if>
-            </div>
-
-        </div>
-        <div class="main-flex-w3ls-sectns">
-
-        </div>
-
-        <div class="radio-section">
-            <h6>Select your Fare</h6>
-            <ul class="radio-buttons-w3-agileits">
-                <li>
-                    <input type="radio" id="a-option" name="selector1">
-                    <label for="a-option">One Way</label>
-                    <div class="check"></div>
-                </li>
-                <li>
-                    <input type="radio" id="b-option" name="selector1">
-                    <label for="b-option">Round-Trip</label>
-                    <div class="check">
-                        <div class="inside"></div>
-                    </div>
-                </li>
-            </ul>
-            <div class="clear"></div>
-        </div>
-
-        <div class="clear"></div>
-        <input id="search-flight" type="submit" value="Find flight">
-
-        <div class="clear"></div>
-    </f:form>
-</div>
-    <!--// Form starts here  check in page-->
-
-<div  id="searchResult" class="container-fluid" align="center">
+<!--// Form starts here  check in page-->
+<div id="searchResult" class="container-xxl" align="center">
 
     <h1>SEARCH RESULT</h1>
-
     <table class="table table-dark table-striped">
 
         <tr>
-
             <th>FLIGHT-NUMBER</th>
             <th>AIRLINE</th>
             <th>DEPARTURE</th>

@@ -16,4 +16,7 @@ public class Search {
     private String from;
     private String to;
     private LocalDate date;
+
+    private Long reservationNumber;
+    private String passengerEmail;
 }

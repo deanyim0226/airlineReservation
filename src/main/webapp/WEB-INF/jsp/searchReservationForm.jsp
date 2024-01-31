@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
     <title>User Form</title>
     <style>
 
@@ -371,12 +372,31 @@
             }
         }
     </style>
+    <script>
+        $(document).ready(function(){
+
+            $("#book").click(function(){
+                let flightId = $("#book").attr("data-flight-id")
+                $("#flight-id").val(flightId);
+                $("#myModal").toggle()
+            })
+
+            $(".close").click(function(){
+                $("#myModal").hide()
+            })
+
+            $("#close").click(function(){
+                $("#myModal").hide()
+            })
+        })
+    </script>
 </head>
 <body>
 <header>
     <nav class="navbar bg-primary">
+        <a  class="btn btn-primary dropdown"  href="home">HOME</a>
         <ul class="nav justify-content-end">
-            <li > <a  class="btn btn-primary dropdown"  href="home">HOME</a></li>
+
             <li > <a  class="btn btn-primary dropdown"  href="userForm">USER FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="roleForm">ROLE FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="passengerForm">PASSENGER FORM</a></li>
@@ -388,78 +408,38 @@
         </ul>
     </nav>
 </header>
-<h1>HOME</h1>
-
-<!-- https://w3layouts.com/airline-booking-form-responsive-widget-template/ -->
+<br>
 <div class="booking-form-w3layouts">
     <!-- Form starts here -->
-    <form action="#" method="post">
-        <h2 class="sub-heading-agileits">Search</h2>
+    <f:form action="searchReservation" method="POST" modelAttribute="search">
+        <h2 class="sub-heading-agileits">Search Reservation</h2>
+
         <div class="main-flex-w3ls-sectns">
             <div class="field-agileinfo-spc form-w3-agile-text1">
-                <label>From*</label>
-                <input type="text" class="form-control"/>
+                <label>Reservation Number</label>
+                <f:input type="text" path="reservationNumber" class="form-control" id="reservationNumber"/>
+                <c:if test="${hasError}">
+                    <f:errors path="reservationNumber"></f:errors>
+                </c:if>
             </div>
             <div class="field-agileinfo-spc form-w3-agile-text2">
-                <label>To*</label>
-                <input type="text" class="form-control"/>
+                <label>Passenger Email</label>
+                <f:input type="text" path="passengerEmail" class="form-control" id="passengerEmail"/>
+                <c:if test="${hasError}">
+                    <f:errors path="passengerEmail"></f:errors>
+                </c:if>
             </div>
-        </div>
-        <div class="main-flex-w3ls-sectns">
-
-            <div class="field-agileinfo-spc form-w3-agile-text1">
-                <label>Dates*</label>
-                <input id="datepicker" name="Text" type="date" class="hasDatepicker">
-            </div>
-
 
         </div>
         <div class="main-flex-w3ls-sectns">
-
+            <input id="search-flight" type="submit" value="Find Reservation">
         </div>
 
-        <div class="radio-section">
-            <h6>Select your Fare</h6>
-            <ul class="radio-buttons-w3-agileits">
-                <li>
-                    <input type="radio" id="a-option" name="selector1">
-                    <label for="a-option">One Way</label>
-                    <div class="check"></div>
-                </li>
-                <li>
-                    <input type="radio" id="b-option" name="selector1">
-                    <label for="b-option">Round-Trip</label>
-                    <div class="check">
-                        <div class="inside"></div>
-                    </div>
-                </li>
-            </ul>
-            <div class="clear"></div>
-        </div>
 
-        <div class="clear"></div>
-        <input type="submit" value="Find flight">
 
-        <div class="clear"></div>
-    </form>
-    <!--// Form starts here -->
+    </f:form>
 </div>
-
-<s:authorize access="isAuthenticated()">
-
-    <br> Principal: <s:authentication property="principal"/>
-    <br> User: <s:authentication property="principal.username"/>
-    <br> Password: <s:authentication property="principal.password"/>
-    <br> Enabled: <s:authentication property="principal.enabled"/>
-    <br> AccountNonExpired: <s:authentication property="principal.accountNonExpired"/>
-    <br> CredentialIsNonExpired: <s:authentication property="principal.credentialsNonExpired"/>
-    <br> AccountNonLocked: <s:authentication property="principal.AccountNonLocked"/>
-    <br> Granted Authorities: <s:authentication property="principal.authorities"/>
-
-    <br> loggedInuser: ${loggedInuser}
-    <br>
-    <a href="/logout"> Logout</a>
-</s:authorize>
+<!--// Form starts here  check in page-->
 
 </body>
 </html>

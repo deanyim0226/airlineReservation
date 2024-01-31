@@ -9,28 +9,29 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>User Form</title>
-
+    <title>RESERVATION Form</title>
     <script>
         $(document).ready(function(){
 
-            $("#addRole").click(function(){
+            $(".update").each(function(index, element){
+                $(element).click(function(){
+                    let reservationNumber = $(this).attr("data-id")
+                    $("#myModal").toggle();
 
-                $("#modal_roleId").attr("readonly",false)
-
-                $("#modal_roleId").val("")
-                $("#modal_roleName").val("")
-                $("#modal_roleDescription").val("")
-
-                $("#myModal").toggle()
-            })
+                    //make a request call to retrieve reservation with id
+                })
+            });
 
             $(".close").click(function(){
-                $("#myModal").hide()
+
+                $("#myModal").hide();
             })
+
             $("#close").click(function(){
                 $("#myModal").hide()
             })
+
+
         })
     </script>
 </head>
@@ -56,17 +57,20 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header" >
-                <h4 class="modal-title">ROLE INFO</h4>
+                <h4 class="modal-title">RESERVATION INFO</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
+
             <div class="modal-body">
-                <f:form action="saveRole" method="POST" modelAttribute="role">
+                <f:form action="updateReservation" method="POST" modelAttribute="reservation">
                     <div class="col">
-                        ROLE ID <f:input path="roleId" readonly="true" class="form-control" type="text" id="modal_roleId"/>
-                        ROLE <f:input path="roleName" class="form-control" type="text" id="modal_roleName"/>
-                        DESCRIPTION <f:input path="description" class="form-control" type="text" id="modal_roleDescription"/>
-                        <input style="margin-top:25px" class="btn form-control btn-primary" type="submit" id="" value="submit"/>
+                        Reservation-Number <f:input path="reservationNumber" class="form-control" type="text" readonly="true"  id="modal_reservationNumber"/>
+                        Passenger <f:input path="passenger" class="form-control" type="text"  readonly="true"  id="modal_passenger"/>
+                        Flight <f:input path="flight" class="form-control" type="text" readonly="true"  id="modal_flight"/>
+                        Checked-Bags <f:input path="checkedBags" class="form-control" type="text" id="modal_checkedBags"/>
+                        Checked-IN <f:input path="checkedIn" class="form-control" type="text" id="modal_checkedIn"/>
+                        <input style="margin-top:25px" class="btn form-control btn-primary" type="submit" id="" value="CheckIn"/>
                     </div>
                 </f:form>
             </div>
@@ -78,26 +82,31 @@
     </div>
 </div>
 
-<div class="container-xxl" align="center">
-    <h2>ROLE RECORD</h2>
+
+<div class="container-fluid" align="center">
+    <h2>RESERVATION RECORD</h2>
     <table class="table table-primary table-striped">
         <tr>
-            <th>ROLE-ID</th>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th >OPTION</th>
-            <th><button class="btn btn-success" id="addRole">ADD</button></th>
+            <th>RESERVATION-ID</th>
+            <th>PASSENGER-INFO</th>
+            <th>FLIGHT-INFO</th>
+            <th>CHECKED BAGS</th>
+            <th>CHECKED IN</th>
+            <th align="2">ACTION</th>
         </tr>
-        <c:forEach items="${roles}" var="role">
+        <c:forEach items="${reservations}" var="reservation">
             <tr>
-                <td>${role.getRoleId()}</td>
-                <td>${role.getRoleName()}</td>
-                <td>${role.getDescription()}</td>
-                <td><a href="/updateRole?roleId=${role.getRoleId()}">UPDATE</a></td>
-                <td><a href="/deleteRole?roleId=${role.getRoleId()}">DELETE</a></td>
+                <td>${reservation.getReservationNumber()}</td>
+                <td>${reservation.getPassenger().getFirstName()} ${reservation.getPassenger().getLastName()}, ${reservation.getPassenger().getGender()} </td>
+                <td>${reservation.getFlight().getDepartureDate()} ${reservation.getFlight().getDepartureCity()} -> ${reservation.getFlight().getArrivalCity()} at ${reservation.getFlight().getDepartureTime()}</td>
+                <td>${reservation.getCheckedBags()}</td>
+                <td>${reservation.isCheckedIn()}</td>
+                <td><a class="update" data-id="${reservation.getReservationNumber()}">UPDATE</a></td>
+                <td><a href="deleteReservation?reservationId=${reservation.getReservationNumber()}">CANCEL</a></td>
             </tr>
         </c:forEach>
     </table>
+
 </div>
 </body>
 </html>
