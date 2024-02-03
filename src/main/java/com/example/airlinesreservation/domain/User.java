@@ -1,5 +1,6 @@
 package com.example.airlinesreservation.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class User {
     private String mobileNo;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference
     private List<Role> roles = new ArrayList<>();
 
 }

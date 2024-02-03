@@ -18,9 +18,9 @@ public interface UserService {
 
     public User saveUser(User user);
 
-    public void deleteById(Long userId);
+    public User deleteById(Long userId);
 
-    public void updateUser(User user);
+    public User updateUser(User user);
 
-    public User findByUsername(String username);
+    public List<User> findByUsername(String username);
 }

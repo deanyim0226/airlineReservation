@@ -3,6 +3,8 @@ package com.example.airlinesreservation.service;
 
 import com.example.airlinesreservation.dao.UserRepository;
 import com.example.airlinesreservation.domain.User;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public List<User> findAll() {
         List<User> users = null;
+
         try(Session session = sessionFactory.openSession();){
             session.beginTransaction();
             users = session.createQuery("from User").list();
@@ -73,47 +76,103 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
-        String encryptedPassword = encoder.encode(user.getPassword());
-        user.setPassword(encryptedPassword);
-        return userRepository.save(user);
+    public User saveUser(User newUser) {
+        if(newUser == null){
+            return  null;
+        }else{
+            String encryptedPassword = encoder.encode(newUser.getPassword());
+            newUser.setPassword(encryptedPassword);
+            try(Session session = sessionFactory.openSession();){
+                
+                session.beginTransaction();
+                Long userId = (Long) session.save(newUser);
+                User savedUser = session.get(User.class, userId);
+                session.getTransaction().commit();
+
+                return savedUser;
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
     }
 
 
     @Override
-    public void deleteById(Long userId) {
+    public User deleteById(Long userId) {
+        User retrievedUser = null;
         try(Session session = sessionFactory.openSession();){
 
             session.beginTransaction();
-            User retrievedUser = session.get(User.class, userId);
+            retrievedUser = session.get(User.class, userId);
 
             if(retrievedUser != null){
+                System.out.println(retrievedUser.getUsername() + " is deleted");
                 session.delete(retrievedUser);
             }
             session.getTransaction().commit();
 
+
         }catch (Exception e){
             e.printStackTrace();
         }
 
+        return retrievedUser;
+
     }
 
     @Override
-    public void updateUser(User user) {
+    public User updateUser(User user) {
+        User retrievedUser = null;
+
         try(Session session = sessionFactory.openSession();){
 
             session.beginTransaction();
-            session.update(user);
+            retrievedUser = session.get(User.class,user.getUserId());
+
+            if(retrievedUser == null){
+                return null;
+            }
+
+            retrievedUser.setRoles(user.getRoles());
+            retrievedUser.setEmail(user.getEmail());
+            retrievedUser.setMobileNo(user.getMobileNo());
+            retrievedUser.setUsername(user.getUsername());
+
+            session.update(retrievedUser);
             session.getTransaction().commit();
+
+            return retrievedUser;
 
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        return retrievedUser;
     }
 
     @Override
-    public User findByUsername(String username) {
+    public List<User> findByUsername(String username) {
 
-        return userRepository.findByUsername(username);
+        String sql = "From User where username = :param";
+
+        try(Session session = sessionFactory.openSession();){
+            session.beginTransaction();
+            Query query = session.createQuery(sql);
+            query.setParameter("param",username);
+            List<User> users = query.getResultList();
+
+            session.getTransaction().commit();
+
+            return users;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
+        //return userRepository.findByUsername(username); using JPA
     }
 }
