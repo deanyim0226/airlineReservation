@@ -103,9 +103,9 @@ public class LoginController {
 
         List<User> users = userService.findAll();
         Long currentId = Long.valueOf(users.size());
-        Role customerRole = roleService.findByRoleName(CUSTOMER_ROLE);
+        List<Role> customerRole = roleService.findByRoleName(CUSTOMER_ROLE);
 
-        user.setRoles(Arrays.asList(customerRole));
+        user.setRoles(customerRole);
         user.setUserId(++currentId);
         System.out.println("user is " + user.getUsername());
         userService.registerUser(user);

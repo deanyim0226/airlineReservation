@@ -1,6 +1,7 @@
 package com.example.airlinesreservation.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -28,5 +29,6 @@ public class Role {
     private String description;
 
     @ManyToMany(mappedBy = "roles")
+    @JsonBackReference
     private List<User> users = new ArrayList<>();
 }

@@ -12,7 +12,9 @@ public interface RoleService {
 
     public Role saveRole(Role role);
 
-    public void deleteById(Long roleId);
+    public Role deleteById(Long roleId);
 
-    public Role findByRoleName(String roleName);
+    public Role updateRole(Role roleId);
+
+    public List<Role> findByRoleName(String roleName);
 }

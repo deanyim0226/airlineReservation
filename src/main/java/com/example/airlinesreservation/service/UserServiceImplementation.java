@@ -83,7 +83,7 @@ public class UserServiceImplementation implements UserService {
             String encryptedPassword = encoder.encode(newUser.getPassword());
             newUser.setPassword(encryptedPassword);
             try(Session session = sessionFactory.openSession();){
-                
+
                 session.beginTransaction();
                 Long userId = (Long) session.save(newUser);
                 User savedUser = session.get(User.class, userId);
