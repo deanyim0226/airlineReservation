@@ -23,7 +23,7 @@ public class Airline {
     private String airlineName;
     private String airlineCode;
 
-    @OneToMany//may need to change
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Flight> airlineFlight = new ArrayList<>();
 
 }

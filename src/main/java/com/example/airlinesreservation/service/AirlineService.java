@@ -9,5 +9,7 @@ public interface AirlineService {
     public Airline saveAirline(Airline airline);
     public List<Airline> getAll();
     public Airline findById(Long airlineId);
-    public void deleteById(Long airlineId);
+    public Airline deleteById(Long airlineId);
+
+    public Airline updateAirline(Airline airline);
 }

@@ -9,6 +9,8 @@ public interface AirportService {
     public Airport saveAirport(Airport airport);
     public List<Airport> getAll();
     public Airport findById(Long airportId);
-    public void deleteById(Long airportId);
+    public Airport deleteById(Long airportId);
+
+    public Airport updateAirport(Airport airport);
 
 }
