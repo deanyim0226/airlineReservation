@@ -9,5 +9,7 @@ public interface FlightService {
     public Flight saveFlight(Flight flight);
     public List<Flight> getAll();
     public Flight findById(Long flightId);
-    public void deleteById(Long flightId);
+    public Flight deleteById(Long flightId);
+
+    public Flight updateFlight(Flight flight);
 }
