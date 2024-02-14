@@ -31,18 +31,9 @@ public class ReservationController {
     @Autowired
     PassengerService passengerService;
 
-    @RequestMapping(value = "/reservationForm")
-    public ModelAndView reservationForm(Reservation reservation){
-        ModelAndView mav = new ModelAndView("reservationForm");
-
-
-        mav.addObject("reservations", reservationService.getAll());
-        return mav;
-    }
-
     @RequestMapping(value = "/saveReservation")
     public ModelAndView saveReservation( @ModelAttribute Reservation reservation, BindingResult br){
-        ModelAndView mav = new ModelAndView("reservationForm");
+        ModelAndView mav = new ModelAndView("searchReservationForm");
         List<Reservation> reservationList = reservationService.getAll();
         reservation.setReservationNumber(Long.valueOf(reservationList.size()+1));
 
@@ -69,14 +60,14 @@ public class ReservationController {
         reservationService.saveReservation(reservation);
 
         mav.addObject("reservations", reservationService.getAll());
-        mav.setViewName("redirect:reservationForm");
+        mav.setViewName("redirect:searchReservationForm");
         return mav;
     }
 
     @RequestMapping(value = "/updateReservation")
     public ModelAndView updateReservation(@RequestParam Long reservationId){
 
-        ModelAndView mav = new ModelAndView("reservationForm");
+        ModelAndView mav = new ModelAndView("searchReservationForm");
 
         Reservation retrievedReservation = reservationService.findById(reservationId);
 
@@ -97,7 +88,7 @@ public class ReservationController {
     @RequestMapping(value = "/deleteReservation")
     public ModelAndView deleteReservation(@RequestParam Long reservationId){
 
-        ModelAndView mav = new ModelAndView("reservationForm");
+        ModelAndView mav = new ModelAndView("searchReservationForm");
 
         Reservation retrievedReservation = reservationService.findById(reservationId);
 

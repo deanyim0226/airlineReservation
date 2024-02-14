@@ -1,9 +1,7 @@
 package com.example.airlinesreservation.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +21,8 @@ public class Reservation {
     @OneToOne
     private Passenger passenger;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "flightId")
     private Flight flight;
 
     private int checkedBags;

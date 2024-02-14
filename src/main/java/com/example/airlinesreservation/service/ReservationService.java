@@ -9,5 +9,7 @@ public interface ReservationService {
     public Reservation saveReservation(Reservation reservation);
     public List<Reservation> getAll();
     public Reservation findById(Long reservationId);
-    public void deleteReservation(Long reservationId);
+    public Reservation deleteReservation(Long reservationId);
+
+    public Reservation findByPassengerEmail(String email);
 }

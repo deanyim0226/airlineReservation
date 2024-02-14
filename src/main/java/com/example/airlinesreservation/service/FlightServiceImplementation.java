@@ -6,6 +6,7 @@ import com.example.airlinesreservation.domain.Flight;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -73,6 +74,16 @@ public class FlightServiceImplementation implements FlightService{
     @Override
     public Flight deleteById(Long flightId) {
         try(Session session = sessionFactory.openSession();){
+
+            session.beginTransaction();
+            Flight retrievedFlight = session.get(Flight.class, flightId);
+            if(retrievedFlight == null) {
+                return null;
+            }
+            session.delete(retrievedFlight);
+            session.getTransaction().commit();
+
+            return retrievedFlight;
 
         }catch (Exception e){
             e.printStackTrace();

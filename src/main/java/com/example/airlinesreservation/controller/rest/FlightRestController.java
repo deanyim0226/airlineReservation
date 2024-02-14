@@ -57,6 +57,7 @@ public class FlightRestController {
     public ResponseEntity<Flight> deleteFlight(@RequestParam Long flightId){
         Flight deletedFlight = flightService.deleteById(flightId);
         if(deletedFlight == null){
+
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(deletedFlight);
         }
 
