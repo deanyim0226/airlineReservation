@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -66,7 +67,7 @@ public class ReservationController {
 
     @RequestMapping(value = "/updateReservation")
     public ModelAndView updateReservation(@RequestParam Long reservationId){
-
+        //problem change the way to update from mvc
         ModelAndView mav = new ModelAndView("searchReservationForm");
 
         Reservation retrievedReservation = reservationService.findById(reservationId);
@@ -88,8 +89,8 @@ public class ReservationController {
     @RequestMapping(value = "/deleteReservation")
     public ModelAndView deleteReservation(@RequestParam Long reservationId){
 
-        ModelAndView mav = new ModelAndView("searchReservationForm");
-
+        ModelAndView mav = new ModelAndView("redirect:searchReservationForm");
+        //System.out.println("id is"+reservation.getReservationNumber());
         Reservation retrievedReservation = reservationService.findById(reservationId);
 
         if(retrievedReservation == null){

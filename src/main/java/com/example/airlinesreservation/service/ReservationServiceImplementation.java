@@ -19,6 +19,11 @@ public class ReservationServiceImplementation implements ReservationService{
     public Reservation saveReservation(Reservation reservation) {
         try(Session session = sessionFactory.openSession();){
             session.beginTransaction();
+
+            Reservation retrievedReservation = session.get(Reservation.class, reservation.getReservationNumber());
+            if(retrievedReservation != null){
+                return null;
+            }
             Long reservationId = (Long)session.save(reservation);
             Reservation savedReservation = session.get(Reservation.class, reservationId);
             session.getTransaction().commit();
@@ -61,11 +66,69 @@ public class ReservationServiceImplementation implements ReservationService{
 
     @Override
     public Reservation deleteReservation(Long reservationId) {
+
+        try(Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            Reservation deletedReservation = session.get(Reservation.class,reservationId);
+            if(deletedReservation == null){
+                return null;
+            }
+            session.delete(deletedReservation);
+            session.getTransaction().commit();
+            return deletedReservation;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Reservation updateReservation(Reservation reservation) {
+        try(Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+
+            Reservation retrievedReservation = session.get(Reservation.class,reservation.getReservationNumber());
+
+            //maybe need to update flight and passenger in their services
+            /*
+            retrievedReservation.setFlight(reservation.getFlight());
+            retrievedReservation.setPassenger(reservation.getPassenger());
+            */
+            retrievedReservation.setCheckedIn(reservation.isCheckedIn());
+            retrievedReservation.setCheckedBags(reservation.getCheckedBags());
+
+            session.update(retrievedReservation);
+            session.getTransaction().commit();
+
+            return retrievedReservation;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public Reservation findByPassengerEmail(String email) {
+        String hql = "From Reservation";
+        try(Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            List<Reservation> reservationList = session.createQuery(hql).list();
+            Reservation matchedReservation = null;
+
+            for(Reservation reservation : reservationList){
+                if(email.equals(reservation.getPassenger().getEmail())){
+                    matchedReservation = reservation;
+                }
+            }
+
+            session.getTransaction().commit();
+            return  matchedReservation;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
     /*

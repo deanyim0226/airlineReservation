@@ -9,13 +9,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
     <title>AIRPORT Form</title>
 </head>
 <body>
 <header>
     <nav class="navbar bg-primary">
+        <a  class="btn btn-primary dropdown"  href="home">HOME</a>
         <ul class="nav justify-content-end">
-            <li > <a  class="btn btn-primary dropdown"  href="home">HOME</a></li>
+
             <li > <a  class="btn btn-primary dropdown"  href="userForm">USER FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="roleForm">ROLE FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="passengerForm">PASSENGER FORM</a></li>
@@ -28,49 +30,58 @@
     </nav>
 </header>
 
-<div align="center">
-    <h1>AIRPORT FORM</h1>
+<br>
+<div class="booking-form-w3layouts">
+    <!-- Form starts here -->
     <f:form modelAttribute="airport" action="saveAirport" method="post">
-    <table>
-        <tr>
-            <td>AIRPORT-ID</td>
-            <td><f:input path="airportId"/>
+        <h2 class="sub-heading-agileits">AIRPORT FORM</h2>
+
+        <div class="main-flex-w3ls-sectns">
+            <div class="field-agileinfo-spc form-w3-agile-text1">
+                <label>AIRPORT-ID</label>
+                <f:input path="airportId"/>
                 <c:if test="${hasError}" >
                     <f:errors path="airportId"></f:errors>
                 </c:if>
-
-            </td>
-        </tr>
-        <tr>
-            <td>AIRPORT-CODE</td>
-            <td><f:input path="airportCode"/>
+            </div>
+            <div class="field-agileinfo-spc form-w3-agile-text2">
+                <label>AIRPORT-CODE</label>
+                <f:input path="airportCode"/>
                 <c:if test="${hasError}" >
                     <f:errors path="airportCode"></f:errors>
                 </c:if>
-            </td>
-        </tr>
-        <tr>
-            <td>NAME</td>
-            <td><f:input path="airportName"/>
+            </div>
+
+        </div>
+        <div class="main-flex-w3ls-sectns">
+
+            <div class="field-agileinfo-spc form-w3-agile-text1">
+                <label>NAME</label>
+                <f:input path="airportName"/>
                 <c:if test="${hasError}" >
                     <f:errors path="airportName"></f:errors>
                 </c:if>
-            </td>
-        </tr>
-        <tr>
-            <td>CITY</td>
-            <td><f:input path="airportCity"/>
+            </div>
+
+            <div class="field-agileinfo-spc form-w3-agile-text1">
+                <label>LOCATION (CITY)</label>
+                <f:input path="airportCity"/>
                 <c:if test="${hasError}" >
                     <f:errors path="airportCity"></f:errors>
                 </c:if>
-            </td>
-        </tr>
-    </table>
-        <input type="submit" value="submit">
+            </div>
+        </div>
+        <div class="clear"></div>
+        <input id="save-airport" type="submit" value="Submit">
+
+        <div class="clear"></div>
+
     </f:form>
 </div>
+
+<br>
 <div class="container-fluid" align="center">
-    <h2>AIRPORT RECORD</h2>
+
     <table class="table table-primary table-striped">
         <tr>
             <th>AIRPORT-ID</th>

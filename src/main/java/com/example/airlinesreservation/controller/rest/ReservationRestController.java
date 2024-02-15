@@ -39,6 +39,18 @@ public class ReservationRestController {
         return ResponseEntity.status(HttpStatus.OK).body(retrievedReservation);
     }
 
+    @GetMapping("getReservationByEmail")
+    public ResponseEntity<Reservation> getByEmail(@RequestParam String email){
+
+        Reservation retrievedReservation = reservationService.findByPassengerEmail(email);
+
+        if(retrievedReservation == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(retrievedReservation);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(retrievedReservation);
+    }
+
     @PostMapping("saveReservation")
     public ResponseEntity<Reservation> saveReservation(@RequestBody Reservation reservation){
 
@@ -51,5 +63,28 @@ public class ReservationRestController {
         return ResponseEntity.status(HttpStatus.OK).body(savedReservation);
     }
 
+    @DeleteMapping ("deleteReservation")
+    public ResponseEntity<Reservation> deleteReservation(@RequestParam Long reservationId){
+
+        Reservation deleteReservation = reservationService.deleteReservation(reservationId);
+
+        if(deleteReservation == null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(deleteReservation);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(deleteReservation);
+    }
+
+    @PutMapping("updateReservation")
+    public ResponseEntity<Reservation> updateReservation(@RequestBody Reservation reservation){
+
+        Reservation updatedReservation = reservationService.updateReservation(reservation);
+
+        if(updatedReservation == null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(updatedReservation);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(updatedReservation);
+    }
 
 }

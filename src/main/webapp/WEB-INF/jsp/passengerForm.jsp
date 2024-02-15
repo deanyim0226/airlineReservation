@@ -16,8 +16,9 @@
 <body>
 <header>
     <nav class="navbar bg-primary">
+        <a  class="btn btn-primary dropdown"  href="home">HOME</a>
         <ul class="nav justify-content-end">
-            <li > <a  class="btn btn-primary dropdown"  href="home">HOME</a></li>
+
             <li > <a  class="btn btn-primary dropdown"  href="userForm">USER FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="roleForm">ROLE FORM</a></li>
             <li > <a  class="btn btn-primary dropdown"  href="passengerForm">PASSENGER FORM</a></li>
@@ -30,132 +31,127 @@
     </nav>
 </header>
 <br>
-<br>
+
 <div class="booking-form-w3layouts">
+    <f:form modelAttribute="passenger" method="post" action="savePassengerByAdmin">
+        <h2 class="sub-heading-agileits">Passenger Form</h2>
 
-    <h2 class="sub-heading-agileits">Passenger Form</h2>
-
-    <div class="main-flex-w3ls-sectns">
-        <div class="field-agileinfo-spc form-w3-agile-text1">
-            <label>Reservation Number</label>
+        <div class="main-flex-w3ls-sectns">
+            <div class="field-agileinfo-spc form-w3-agile-text1">
+                <label>PASSENGER-ID</label>
+                <f:input path="passengerId"/>
+                <c:if test="${hasError}">
+                    <f:errors path="passengerId"></f:errors>
+                </c:if>
+            </div>
+            <div class="field-agileinfo-spc form-w3-agile-text2">
+                <label>EMAIL</label>
+                <f:input path="email"/>
+                <c:if test="${hasError}">
+                    <f:errors path="email"></f:errors>
+                </c:if>
+            </div>
+        </div>
+        <div class="main-flex-w3ls-sectns">
+            <div class="field-agileinfo-spc form-w3-agile-text2">
+                <label>FIRSTNAME</label>
+                <f:input path="firstName"/>
+                <c:if test="${hasError}">
+                    <f:errors path="firstName"></f:errors>
+                </c:if>
+            </div>
+            <div class="field-agileinfo-spc form-w3-agile-text1">
+                <label>LASTNAME</label>
+                <f:input path="lastName"/>
+                <c:if test="${hasError}">
+                    <f:errors path="lastName"></f:errors>
+                </c:if>
+            </div>
 
         </div>
-        <div class="field-agileinfo-spc form-w3-agile-text2">
-            <label>Passenger Email</label>
 
-        </div>
-    </div>
-    <div class="main-flex-w3ls-sectns">
-        <input id="search-flight" type="submit" value="Find Reservation">
-    </div>
-</div>
+        <div class="main-flex-w3ls-sectns">
 
-    <div align="center">
-        <h1>PASSENGER FORM</h1>
-        <f:form modelAttribute="passenger" method="post" action="savePassengerByAdmin">
-        <table>
-            <tr>
-                <td>PASSENGER-ID</td>
-                <td><f:input path="passengerId"/>
-                    <c:if test="${hasError}">
-                        <f:errors path="passengerId"></f:errors>
-                    </c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>FIRSTNAME</td>
-                <td><f:input path="firstName"/>
-                    <c:if test="${hasError}">
-                        <f:errors path="firstName"></f:errors>
-                    </c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>LASTNAME</td>
-                <td><f:input path="lastName"/>
-                    <c:if test="${hasError}">
-                        <f:errors path="lastName"></f:errors>
-                    </c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>EMAIL</td>
-                <td><f:input path="email"/>
-                    <c:if test="${hasError}">
-                        <f:errors path="email"></f:errors>
-                    </c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>GENDER</td>
-                <td>
+            <div class="field-agileinfo-spc form-w3-agile-text1">
+                <label>GENDER</label>
                 <f:select path="gender">
-                <c:forEach items="${genders}" var="gender">
-                    <f:option value="${gender}"></f:option>
-                </c:forEach>
+                    <c:forEach items="${genders}" var="gender">
+                        <f:option value="${gender}"></f:option>
+                    </c:forEach>
                     <c:if test="${hasError}">
                         <f:errors path="gender"></f:errors>
                     </c:if>
                 </f:select>
-                </td>
-            </tr>
-            <tr>
-                <td>DOB</td>
-                <td><f:input type="date" path="DOB"/>
-                    <c:if test="${hasError}">
-                        <f:errors path="DOB"></f:errors>
-                    </c:if>
-                </td>
-            </tr>
+            </div>
 
-            <tr>
-                <td>ADDRESS LINE1</td>
-                <td><f:input path="address.addressLine1"/>
-                    <c:if test="${hasError}">
-                        <f:errors path="address.addressLine1"></f:errors>
-                    </c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>ADDRESS LINE2</td>
-                <td><f:input path="address.addressLine2"/></td>
-            </tr>
-            <tr>
-                <td>CITY</td>
-                <td><f:input path="address.city"/>
-                    <c:if test="${hasError}">
-                        <f:errors path="address.city"></f:errors>
-                    </c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>STATE</td>
-                <td><f:input path="address.state"/>
-                    <c:if test="${hasError}">
-                        <f:errors path="address.state"></f:errors>
-                    </c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>ZIPCODE</td>
-                <td><f:input path="address.zipcode"/>
-                    <c:if test="${hasError}">
-                        <f:errors path="address.zipcode"></f:errors>
-                    </c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>COUNTRY</td>
-                <td><f:input path="address.country"/>
-                    <c:if test="${hasError}">
-                        <f:errors path="address.country"></f:errors>
-                    </c:if>
-                </td>
-            </tr>
-        </table>
-            <input type="submit" value="submit">
-        </f:form>
-    </div>
+            <div class="field-agileinfo-spc form-w3-agile-text2">
+                <label>DOB</label>
+                <f:input type="date" path="DOB"/>
+                <c:if test="${hasError}">
+                    <f:errors path="DOB"></f:errors>
+                </c:if>
+            </div>
+        </div>
+
+        <h3 class="sub-heading-agileits">Address</h3>
+        <div class="main-flex-w3ls-sectns">
+            <div class="field-agileinfo-spc form-w3-agile-text1">
+                <label>ADDRESS LINE1</label>
+                <f:input path="address.addressLine1"/>
+                <c:if test="${hasError}">
+                    <f:errors path="address.addressLine1"></f:errors>
+                </c:if>
+            </div>
+            <div class="field-agileinfo-spc form-w3-agile-text1">
+                <label>ADDRESS LINE2</label>
+                <f:input path="address.addressLine2"/>
+                <c:if test="${hasError}">
+                    <f:errors path="address.addressLine2"></f:errors>
+                </c:if>
+            </div>
+
+        </div>
+        <div class="main-flex-w3ls-sectns">
+            <div class="field-agileinfo-spc form-w3-agile-text1">
+                <label>CITY</label>
+                <f:input path="address.city"/>
+                <c:if test="${hasError}">
+                    <f:errors path="address.city"></f:errors>
+                </c:if>
+            </div>
+            <div class="field-agileinfo-spc form-w3-agile-text2">
+                <label>STATE</label>
+                <f:input path="address.state"/>
+                <c:if test="${hasError}">
+                    <f:errors path="address.state"></f:errors>
+                </c:if>
+            </div>
+            <div class="field-agileinfo-spc form-w3-agile-text1">
+                <label>ZIPCODE</label>
+                <f:input path="address.zipcode"/>
+                <c:if test="${hasError}">
+                    <f:errors path="address.zipcode"></f:errors>
+                </c:if>
+            </div>
+            <div class="field-agileinfo-spc form-w3-agile-text2">
+                <label>COUNTRY</label>
+                <f:input path="address.country"/>
+                <c:if test="${hasError}">
+                    <f:errors path="address.country"></f:errors>
+                </c:if>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+        <input id="save-passenger" type="submit" value="Submit">
+
+        <div class="clear"></div>
+    </f:form>
+
+</div>
+
+<br>
+
 
 <div class="container-fluid" align="center">
         <table class="table table-primary table-striped">

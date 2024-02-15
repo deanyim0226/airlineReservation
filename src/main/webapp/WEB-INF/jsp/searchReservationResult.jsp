@@ -16,6 +16,7 @@
             $(".update").each(function(index, element){
                 $(element).click(function(){
                     let reservationNumber = $(this).attr("data-id")
+                    $("#modal_reservationNumber").val(reservationNumber)
                     $("#myModal").toggle();
 
                     //make a request call to retrieve reservation with id

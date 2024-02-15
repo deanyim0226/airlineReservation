@@ -44,6 +44,8 @@ public class SearchController {
     @RequestMapping("/searchReservationResult")
     public ModelAndView searchReservationResult(Search search, Reservation reservation){
         ModelAndView mav = new ModelAndView("searchReservationResult");
+
+
         mav.addObject("reservations", foundReservationList);
 
         return mav;
@@ -132,7 +134,8 @@ public class SearchController {
         }
 
         for(Flight flight : flightList){
-
+            //need to work on more
+            //can be searchable from or to or dates
             if(from.equals(flight.getDepartureCity()) && to.equals(flight.getArrivalCity())
                     && date.isEqual(flight.getDepartureDate()))
             {

@@ -11,5 +11,6 @@ public interface ReservationService {
     public Reservation findById(Long reservationId);
     public Reservation deleteReservation(Long reservationId);
 
+    public Reservation updateReservation(Reservation reservation);
     public Reservation findByPassengerEmail(String email);
 }

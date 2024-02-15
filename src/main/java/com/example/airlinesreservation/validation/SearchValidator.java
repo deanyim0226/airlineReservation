@@ -39,6 +39,7 @@ public class SearchValidator implements Validator {
 
         }else if(email == null && reservationNumber == null){
             //search flight
+
             if(departure == "" && arrival == ""){
                 if(date == null){
                     errors.rejectValue("date","search.date","DATE SHOULD BE PRESENT");
