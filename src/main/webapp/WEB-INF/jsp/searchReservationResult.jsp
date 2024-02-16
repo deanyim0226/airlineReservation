@@ -19,9 +19,18 @@
                     $("#modal_reservationNumber").val(reservationNumber)
                     $("#myModal").toggle();
 
+
+
                     //make a request call to retrieve reservation with id
                 })
             });
+
+            $(".checkIn").each(function(index, element){
+
+                $(element).click(function(){
+                    let reservationNumber = $(this).attr("data-id")
+                })
+            })
 
             $(".close").click(function(){
 
@@ -53,6 +62,7 @@
     </nav>
 </header>
 
+
 <div class="modal" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -67,8 +77,8 @@
                 <f:form action="updateReservation" method="POST" modelAttribute="reservation">
                     <div class="col">
                         Reservation-Number <f:input path="reservationNumber" class="form-control" type="text" readonly="true"  id="modal_reservationNumber"/>
-                        Passenger <f:input path="passenger" class="form-control" type="text"  readonly="true"  id="modal_passenger"/>
-                        Flight <f:input path="flight" class="form-control" type="text" readonly="true"  id="modal_flight"/>
+                        Passenger <f:input path="passenger" class="form-control" type="hidden" readonly="true"  id="modal_passenger"/>
+                        Flight <f:input path="flight" class="form-control" type="hidden" readonly="true"  id="modal_flight"/>
                         Checked-Bags <f:input path="checkedBags" class="form-control" type="text" id="modal_checkedBags"/>
                         Checked-IN <f:input path="checkedIn" class="form-control" type="text" id="modal_checkedIn"/>
                         <input style="margin-top:25px" class="btn form-control btn-primary" type="submit" id="" value="CheckIn"/>
@@ -93,7 +103,7 @@
             <th>FLIGHT-INFO</th>
             <th>CHECKED BAGS</th>
             <th>CHECKED IN</th>
-            <th align="2">ACTION</th>
+            <th align="3">ACTION</th>
         </tr>
         <c:forEach items="${reservations}" var="reservation">
             <tr>
@@ -102,7 +112,7 @@
                 <td>${reservation.getFlight().getDepartureDate()} ${reservation.getFlight().getDepartureCity()} -> ${reservation.getFlight().getArrivalCity()} at ${reservation.getFlight().getDepartureTime()}</td>
                 <td>${reservation.getCheckedBags()}</td>
                 <td>${reservation.isCheckedIn()}</td>
-                <td><a class="update" data-id="${reservation.getReservationNumber()}">UPDATE</a></td>
+                <td><a class="update" data-id="${reservation.getReservationNumber()}">CHECK-IN</a></td>
                 <td><a href="deleteReservation?reservationId=${reservation.getReservationNumber()}">CANCEL</a></td>
             </tr>
         </c:forEach>

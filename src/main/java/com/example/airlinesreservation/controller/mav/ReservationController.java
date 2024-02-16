@@ -4,6 +4,7 @@ package com.example.airlinesreservation.controller.mav;
 import com.example.airlinesreservation.domain.Flight;
 import com.example.airlinesreservation.domain.Passenger;
 import com.example.airlinesreservation.domain.Reservation;
+import com.example.airlinesreservation.domain.Search;
 import com.example.airlinesreservation.service.FlightService;
 import com.example.airlinesreservation.service.PassengerService;
 import com.example.airlinesreservation.service.ReservationService;
@@ -66,24 +67,33 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/updateReservation")
-    public ModelAndView updateReservation(@RequestParam Long reservationId){
+    public ModelAndView updateReservation(Reservation reservation){
         //problem change the way to update from mvc
-        ModelAndView mav = new ModelAndView("searchReservationForm");
+        ModelAndView mav = new ModelAndView("searchReservationResult");
 
-        Reservation retrievedReservation = reservationService.findById(reservationId);
+        Reservation updatedUser = reservationService.updateReservation(reservation);
 
-        if(retrievedReservation == null){
+        if(updatedUser == null){
 
             //reservation does not exist
+
+            /*
+            tasks
+            think about the way to update passenger info and flight info
+
+            change format
+            XML to JSON
+            XML TO XML
+            JSON TO XML
+             */
             return mav;
         }
 
-
-        mav.addObject("reservation",retrievedReservation);
-        mav.addObject("reservations",reservationService.getAll());
+        mav.addObject("reservation",updatedUser);
+        mav.addObject("reservations",  List.of(updatedUser));
+        //mav.addObject("reservations",reservationService.getAll());
 
         return mav;
-
     }
 
     @RequestMapping(value = "/deleteReservation")

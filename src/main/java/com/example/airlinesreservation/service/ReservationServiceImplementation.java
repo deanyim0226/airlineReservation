@@ -1,6 +1,7 @@
 package com.example.airlinesreservation.service;
 
 import com.example.airlinesreservation.dao.ReservationRepository;
+import com.example.airlinesreservation.domain.Flight;
 import com.example.airlinesreservation.domain.Reservation;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -73,6 +74,15 @@ public class ReservationServiceImplementation implements ReservationService{
             if(deletedReservation == null){
                 return null;
             }
+
+            Flight retrievedFlight = deletedReservation.getFlight();
+            int numberOfBookedSeats = retrievedFlight.getFlightSeatsBooked();
+
+            if(numberOfBookedSeats > 0){
+                retrievedFlight.setFlightSeatsBooked(numberOfBookedSeats-1);
+                session.update(retrievedFlight);
+            }
+
             session.delete(deletedReservation);
             session.getTransaction().commit();
             return deletedReservation;
