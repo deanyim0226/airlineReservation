@@ -29,5 +29,8 @@ public class AirlinesReservationApplication {
 			 -> user information can be changed for example password etc.
 			 -> status reservation
 
+
+	check in
+	change it to radio buttons containing true and false
 	 */
 }

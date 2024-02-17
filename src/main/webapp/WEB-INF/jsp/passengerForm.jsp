@@ -143,7 +143,7 @@
 
         </div>
         <div class="clear"></div>
-        <input id="save-passenger" type="submit" value="Submit">
+        <input id="save-passenger" type="submit" value="SAVE">
 
         <div class="clear"></div>
     </f:form>

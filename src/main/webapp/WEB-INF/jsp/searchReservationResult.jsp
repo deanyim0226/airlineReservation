@@ -108,8 +108,20 @@
         <c:forEach items="${reservations}" var="reservation">
             <tr>
                 <td>${reservation.getReservationNumber()}</td>
-                <td>${reservation.getPassenger().getFirstName()} ${reservation.getPassenger().getLastName()}, ${reservation.getPassenger().getGender()} </td>
-                <td>${reservation.getFlight().getDepartureDate()} ${reservation.getFlight().getDepartureCity()} -> ${reservation.getFlight().getArrivalCity()} at ${reservation.getFlight().getDepartureTime()}</td>
+                <td><a href="passengerForm?passengerId=${reservation.getPassenger().getPassengerId()}
+                &firstName=${reservation.getPassenger().getFirstName()}&email=${reservation.getPassenger().getEmail()}
+                &Gender=${reservation.getPassenger().getGender()}&lastName=${reservation.getPassenger().getLastName()}
+                &DOB=${reservation.getPassenger().getDOB()}&address.addressLine1=${reservation.getPassenger().getAddress().getAddressLine1()}
+                &address.addressLine2=${reservation.getPassenger().getAddress().getAddressLine2()}&address.city=${reservation.getPassenger().getAddress().getCity()}
+                &address.state=${reservation.getPassenger().getAddress().getState()}&address.zipcode=${reservation.getPassenger().getAddress().getZipcode()}&address.country=${reservation.getPassenger().getAddress().getCountry()}">
+                        ${reservation.getPassenger().getFirstName()} ${reservation.getPassenger().getLastName()}, ${reservation.getPassenger().getGender()} </a></td>
+                <td><a href="flightForm?flightId=${reservation.getFlight().getFlightId()}&flightNumber=${reservation.getFlight().getFlightNumber()}
+                            &departureCity=${reservation.getFlight().getDepartureCity()}&departureDate=${reservation.getFlight().getDepartureDate()}&departureTime=${reservation.getFlight().getDepartureTime()}&arrivalCity=${reservation.getFlight().getArrivalCity()}
+                            &arrivalDate=${reservation.getFlight().getArrivalDate()}&arrivalTime=${reservation.getFlight().getArrivalTime()}&flightCapacity=${reservation.getFlight().getFlightCapacity()}&flightPrice=${reservation.getFlight().getFlightPrice()}
+                            &flightSeatsBooked=${reservation.getFlight().getFlightSeatsBooked()}&flightAirline.airlineId=${reservation.getFlight().getFlightAirline().getAirlineId()}
+
+        ">
+                        ${reservation.getFlight().getDepartureDate()} ${reservation.getFlight().getDepartureCity()} -> ${reservation.getFlight().getArrivalCity()} at ${reservation.getFlight().getDepartureTime()}</a></td>
                 <td>${reservation.getCheckedBags()}</td>
                 <td>${reservation.isCheckedIn()}</td>
                 <td><a class="update" data-id="${reservation.getReservationNumber()}">CHECK-IN</a></td>
