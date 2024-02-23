@@ -71,7 +71,41 @@ public class AirportController {
     }
 
     @RequestMapping(value = "/updateAirport")
-    public ModelAndView updateAirport(@RequestParam Long airportId){
+    public ModelAndView updateAirport(@Valid @ModelAttribute Airport airport, BindingResult br){
+
+        ModelAndView mav = new ModelAndView("airportForm");
+        StringBuilder sb = new StringBuilder();
+
+        if(br.hasErrors()){
+            //error while entering airport info from user
+            List<FieldError> errors = br.getFieldErrors();
+
+            for(FieldError error : errors){
+                sb.append(error.getDefaultMessage() + "\n");
+            }
+
+            System.out.println(sb.toString());
+
+            mav.addObject("hasError",true);
+            mav.addObject("airports", airportService.getAll());
+            return mav;
+        }
+        Airport retrievedAirport = airportService.findById(airport.getAirportId());
+        retrievedAirport.setAirportName(airport.getAirportName());
+        retrievedAirport.setAirportCode(airport.getAirportCode());
+        retrievedAirport.setAirportCity(airport.getAirportCity());
+        retrievedAirport.setAirportDepartureFlights(airport.getAirportDepartureFlights());
+        retrievedAirport.setAirportArrivalFlights(airport.getAirportArrivalFlights());
+
+        airportService.updateAirport(retrievedAirport);
+
+        mav.setViewName("redirect:airportForm");
+        mav.addObject("airports",airportService.getAll());
+        return mav;
+    }
+
+    @RequestMapping(value = "/generateAirport")
+    public ModelAndView generateAirport(@RequestParam Long airportId){
         ModelAndView mav = new ModelAndView("airportForm");
 
         Airport retrievedAirport = airportService.findById(airportId);
@@ -87,17 +121,17 @@ public class AirportController {
     }
 
     @RequestMapping(value = "/deleteAirport")
-    public ModelAndView deleteAirport(@RequestParam Long airportId){
+    public ModelAndView deleteAirport(Airport airport){
         ModelAndView mav = new ModelAndView("airportForm");
 
-        Airport retrievedAirport = airportService.findById(airportId);
+        Airport retrievedAirport = airportService.findById(airport.getAirportId());
 
         if(retrievedAirport == null){
             //airport does not exist
             return mav;
         }
 
-        airportService.deleteById(airportId);
+        airportService.deleteById(airport.getAirportId());
         mav.addObject("airports",airportService.getAll());
         return mav;
     }

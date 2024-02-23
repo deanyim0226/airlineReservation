@@ -22,7 +22,7 @@ public class SecurityConfig {
         http.httpBasic().and().csrf().disable().authorizeRequests()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/WEB-INF/jsp/**")).permitAll()
                 .and()
-                .authorizeRequests().requestMatchers("/userForm").hasAnyAuthority("Admin")
+                .authorizeRequests().requestMatchers("/userForm", "/roleForm", "/airportForm", "/airlineForm", "/flightForm" , "/passengerForm").hasAnyAuthority("Admin")
                 .and()
                 .authorizeRequests().requestMatchers("/").authenticated()
                 .and()

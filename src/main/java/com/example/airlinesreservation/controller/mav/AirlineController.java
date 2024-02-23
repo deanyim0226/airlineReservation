@@ -42,7 +42,7 @@ public class AirlineController {
     }
 
     @RequestMapping(value = "/airlineForm")
-    public ModelAndView airportForm(Airline airline){
+    public ModelAndView airlineForm(Airline airline){
         ModelAndView mav = new ModelAndView("airlineForm");
 
         List<Flight> flightList = flightService.getAll();
@@ -56,7 +56,7 @@ public class AirlineController {
     }
 
     @RequestMapping(value = "/saveAirline")
-    public ModelAndView saveAirport(@Valid @ModelAttribute Airline airline, BindingResult br){
+    public ModelAndView saveAirline(@Valid @ModelAttribute Airline airline, BindingResult br){
 
         ModelAndView mav = new ModelAndView("airlineForm");
         StringBuilder sb = new StringBuilder();
@@ -82,7 +82,37 @@ public class AirlineController {
     }
 
     @RequestMapping(value = "/updateAirline")
-    public ModelAndView updateAirport(@RequestParam Long airlineId){
+    public ModelAndView updateAirline(@Valid @ModelAttribute Airline airline, BindingResult br){
+
+        ModelAndView mav = new ModelAndView("airlineForm");
+        StringBuilder sb = new StringBuilder();
+
+        if(br.hasErrors()){
+            //error while entering airport info from user
+            List<FieldError> errors =  br.getFieldErrors();
+
+            for(FieldError error : errors){
+                sb.append(error.getDefaultMessage() + "\n");
+            }
+
+            System.out.println(sb.toString());
+            mav.addObject("hasError",true);
+            return mav;
+        }
+
+        Airline retrievedAirline = airlineService.findById(airline.getAirlineId());
+        retrievedAirline.setAirlineName(airline.getAirlineName());
+        retrievedAirline.setAirlineCode(airline.getAirlineCode());
+        retrievedAirline.setAirlineFlight(airline.getAirlineFlight());
+        airlineService.updateAirline(retrievedAirline);
+
+        mav.setViewName("redirect:airlineForm");
+        mav.addObject("airlines",airlineService.getAll());
+        return mav;
+    }
+
+    @RequestMapping(value = "/generateAirline")
+    public ModelAndView generateAirline(@RequestParam Long airlineId){
         ModelAndView mav = new ModelAndView("airlineForm");
 
         Airline retrievedAirline = airlineService.findById(airlineId);
@@ -98,17 +128,17 @@ public class AirlineController {
     }
 
     @RequestMapping(value = "/deleteAirline")
-    public ModelAndView deleteAirport(@RequestParam Long airlineId){
+    public ModelAndView deleteAirline(Airline airline){
         ModelAndView mav = new ModelAndView("airlineForm");
 
-        Airline retrievedAirline = airlineService.findById(airlineId);
+        Airline retrievedAirline = airlineService.findById(airline.getAirlineId());
 
         if(retrievedAirline == null){
             //airport does not exist
             return mav;
         }
 
-        airlineService.deleteById(airlineId);
+        airlineService.deleteById(airline.getAirlineId());
         mav.addObject("airlines",airlineService.getAll());
         return mav;
     }

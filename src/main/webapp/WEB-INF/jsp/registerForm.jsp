@@ -12,9 +12,14 @@
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
     <style>
 
-        body{
 
+
+        body{
+            background-image: url("https://media.cntraveler.com/photos/607f3c487774091e06dd5d21/16:9/w_2560%2Cc_limit/Breeze%2520Airways_166655077_303814634409055_8038496796049085212_n.jpeg");
+            width: 100%;
+            height: 100%;
         }
+
         label{
             margin-top: .1em;
         }

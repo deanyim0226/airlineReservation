@@ -91,7 +91,34 @@ public class PassengerController {
     }
 
     @RequestMapping(value = "/updatePassenger")
-    public ModelAndView updatePassenger(@RequestParam Long passengerId){
+    public ModelAndView updatePassenger(@ModelAttribute Passenger passenger, BindingResult br){
+
+        ModelAndView mav = new ModelAndView("passengerForm");
+        List<Passenger> passengerList = passengerService.findAll();
+
+        if(br.hasErrors()){
+            //error while entering passenger info from user
+            System.out.println(passenger.getPassengerId());
+
+            mav.addObject("hasError",true);
+            return mav;
+        }
+
+        Passenger retrievedPassenger = passengerService.findById(passenger.getPassengerId());
+
+        retrievedPassenger.setFirstName(passenger.getFirstName());
+        retrievedPassenger.setLastName(passenger.getLastName());
+        retrievedPassenger.setGender(passenger.getGender());
+        retrievedPassenger.setDOB(passenger.getDOB());
+        retrievedPassenger.setEmail(passenger.getEmail());
+        retrievedPassenger.setAddress(passenger.getAddress());
+        passengerService.updatePassenger(retrievedPassenger);
+        mav.setViewName("redirect:passengerForm");
+        return mav;
+    }
+
+    @RequestMapping(value = "/generatePassenger")
+    public ModelAndView generatePassenger(@RequestParam Long passengerId){
 
         ModelAndView mav = new ModelAndView("passengerForm");
 
@@ -113,10 +140,10 @@ public class PassengerController {
     }
 
     @RequestMapping(value = "/deletePassenger")
-    public ModelAndView deletePassenger(@RequestParam Long passengerId){
+    public ModelAndView deletePassenger(Passenger passenger){
 
         ModelAndView mav = new ModelAndView("passengerForm");
-        Passenger retrievedPassenger = passengerService.findById(passengerId);
+        Passenger retrievedPassenger = passengerService.findById(passenger.getPassengerId());
 
         if(retrievedPassenger == null){
             //passenger does not exist
@@ -126,7 +153,7 @@ public class PassengerController {
             return mav;
         }
 
-        //passengerService.deleteById(passengerId);
+        passengerService.deleteById(passenger.getPassengerId());
         mav.addObject("passengers",passengerService.findAll());
         return mav;
 

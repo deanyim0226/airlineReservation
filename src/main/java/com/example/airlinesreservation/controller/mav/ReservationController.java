@@ -53,6 +53,7 @@ public class ReservationController {
         int bookedSeats = selectedFlight.getFlightSeatsBooked();
         selectedFlight.setFlightSeatsBooked(++bookedSeats);
         reservation.setFlight(selectedFlight);
+        flightService.updateFlight(selectedFlight);
 
         if(br.hasErrors()){
             //error while entering reservation info from user

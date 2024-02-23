@@ -17,6 +17,7 @@ import java.time.LocalDate;
 public class Passenger {
 
     @Id
+
     private Long passengerId;
 
     private String firstName;

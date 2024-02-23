@@ -74,8 +74,55 @@ public class FlightController {
         mav.addObject("availableAirlines", airlineList);
         return mav;
     }
+
     @RequestMapping(value = "updateFlight")
-    public ModelAndView updateFlight(@RequestParam Long flightId){
+    public ModelAndView updateFlight(@Valid @ModelAttribute Flight flight, BindingResult br){
+        List<Airline> airlineList = airlineService.getAll();
+        ModelAndView mav = new ModelAndView("flightForm");
+        StringBuilder sb = new StringBuilder("");
+        if(br.hasErrors()){
+            System.out.println("error");
+            //error while getting flight info from user
+            List<FieldError> fieldErrors = br.getFieldErrors();
+            for(FieldError fieldError: fieldErrors){
+                sb = sb.append("\""+fieldError.getField() +"\":"+fieldError.getDefaultMessage()+"\n");
+            }
+            System.out.println("sb: " + sb );
+
+            mav.addObject("hasError",true);
+            mav.addObject("flights",flightService.getAll());
+            mav.addObject("availableAirlines", airlineList);
+            return  mav;
+        }
+
+        Flight retrievedFlight = flightService.findById(flight.getFlightId());
+
+        retrievedFlight.setFlightAirline(flight.getFlightAirline());
+        retrievedFlight.setFlightCapacity(flight.getFlightCapacity());
+        retrievedFlight.setFlightNumber(flight.getFlightNumber());
+        retrievedFlight.setFlightPrice(flight.getFlightPrice());
+        retrievedFlight.setFlightSeatsBooked(flight.getFlightSeatsBooked());
+        retrievedFlight.setArrivalCity(flight.getArrivalCity());
+        retrievedFlight.setArrivalDate(flight.getArrivalDate());
+        retrievedFlight.setArrivalTime(flight.getArrivalTime());
+        retrievedFlight.setDepartureCity(flight.getDepartureCity());
+        retrievedFlight.setDepartureDate(flight.getDepartureDate());
+        retrievedFlight.setDepartureTime(flight.getDepartureTime());
+
+        flightService.updateFlight(retrievedFlight);
+        /*
+        Things to do
+        add object for selected airline
+         */
+        mav.addObject("flight",retrievedFlight);
+        mav.addObject("flights", flightService.getAll());
+        mav.addObject("availableAirlines", airlineList);
+
+        return mav;
+    }
+
+    @RequestMapping(value = "writeFlight")
+    public ModelAndView writeFlight(@RequestParam Long flightId){
         ModelAndView mav = new ModelAndView("flightForm");
 
         Flight retrievedFlight = flightService.findById(flightId);
@@ -97,19 +144,19 @@ public class FlightController {
         return mav;
     }
     @RequestMapping(value = "deleteFlight")
-    public ModelAndView deleteFlight(@RequestParam Long flightId){
+    public ModelAndView deleteFlight(Flight flight){
         ModelAndView mav = new ModelAndView("flightForm");
 
-        Flight retrievedFlight = flightService.findById(flightId);
-
+        Flight retrievedFlight = flightService.findById(flight.getFlightId());
+        List<Airline> airlineList = airlineService.getAll();
         if(retrievedFlight == null){
             //flight does not exist
             return mav;
         }
 
-        flightService.deleteById(flightId);
+        flightService.deleteById(flight.getFlightId());
         mav.addObject("flights", flightService.getAll());
-
+        mav.addObject("availableAirlines", airlineList);
         return mav;
     }
 }

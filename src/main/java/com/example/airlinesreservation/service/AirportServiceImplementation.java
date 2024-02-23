@@ -24,8 +24,10 @@ public class AirportServiceImplementation implements AirportService{
         try(Session session = sessionFactory.openSession();){
 
             session.beginTransaction();
+
             Long airportId = (Long)session.save(airport);
             savedAirport = session.get(Airport.class,airportId);
+
             session.getTransaction().commit();
 
             return savedAirport;

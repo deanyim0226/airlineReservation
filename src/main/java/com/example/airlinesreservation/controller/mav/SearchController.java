@@ -133,6 +133,15 @@ public class SearchController {
             return  mav;
         }
 
+        if(from.isEmpty() && to.isEmpty()){
+
+            for(Flight flight : flightList){
+                if(date.equals(flight.getDepartureDate())){
+                    filteredList.add(flight);
+                }
+            }
+        }
+
         for(Flight flight : flightList){
             //need to work on more
             //can be searchable from or to or dates

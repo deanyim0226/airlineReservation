@@ -22,6 +22,7 @@ import java.time.LocalTime;
 public class Flight {
 
     @Id
+
     private Long flightId;
     private String flightNumber;
 

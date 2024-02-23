@@ -27,7 +27,7 @@ public class User {
     private String mobileNo;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonBackReference
+    //@JsonBackReference
     private List<Role> roles = new ArrayList<>();
 
 }
