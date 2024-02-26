@@ -63,6 +63,7 @@
     </nav>
 </header>
 
+
 <div class="modal" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -113,7 +114,7 @@
 </div>
 <div class="container-fluid" align="center">
 
-        <h2>USER RECORD</h2>
+        <h1>USER RECORD</h1>
         <table class="table table-dark table-striped">
             <tr>
                 <th>USER-ID</th>

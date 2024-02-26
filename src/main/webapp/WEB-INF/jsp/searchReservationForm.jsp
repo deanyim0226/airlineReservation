@@ -444,8 +444,6 @@
             <input id="search-flight" type="submit" value="Find Reservation">
         </div>
 
-
-
     </f:form>
 </div>
 <!--// Form starts here  check in page-->

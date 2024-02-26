@@ -77,7 +77,7 @@ public class SearchController {
                 foundReservationList.add(rev);
                 break;
 
-            }else if(email.equals(passenger.getEmail())){
+            }else if(email.equalsIgnoreCase(passenger.getEmail())){
                 foundReservationList.add(rev);
                 //based on email
             }
@@ -133,24 +133,58 @@ public class SearchController {
             return  mav;
         }
 
-        if(from.isEmpty() && to.isEmpty()){
 
+        if(date == null && !from.isEmpty() && to.isEmpty()){
+
+            for(Flight flight : flightList){
+
+                if(from.equalsIgnoreCase(flight.getDepartureCity())){
+                    filteredList.add(flight);
+                }
+            }
+
+        }else if(date == null && !to.isEmpty() && from.isEmpty()){
+            for(Flight flight : flightList){
+                if(to.equalsIgnoreCase(flight.getArrivalCity())){
+                    filteredList.add(flight);
+                }
+            }
+        }else if(date == null && !from.isEmpty() && !to.isEmpty()){
+            for(Flight flight : flightList){
+                if(to.equalsIgnoreCase(flight.getArrivalCity()) && from.equalsIgnoreCase(flight.getDepartureCity())){
+                    filteredList.add(flight);
+                }
+            }
+        }else if(date != null && from.isEmpty() && to.isEmpty()){
             for(Flight flight : flightList){
                 if(date.equals(flight.getDepartureDate())){
                     filteredList.add(flight);
                 }
             }
-        }
+        }else if(date != null && !from.isEmpty() && to.isEmpty()){
+            for(Flight flight : flightList){
+                if(date.equals(flight.getDepartureDate()) && from.equalsIgnoreCase(flight.getDepartureCity())){
+                    filteredList.add(flight);
+                }
+            }
+        }else if(date != null && !to.isEmpty() && from.isEmpty()){
+            for(Flight flight : flightList){
+                if(date.equals(flight.getDepartureDate()) && to.equalsIgnoreCase(flight.getArrivalCity())){
+                    filteredList.add(flight);
+                }
+            }
+        }else{
+            for(Flight flight : flightList){
 
-        for(Flight flight : flightList){
-            //need to work on more
-            //can be searchable from or to or dates
-            if(from.equals(flight.getDepartureCity()) && to.equals(flight.getArrivalCity())
-                    && date.isEqual(flight.getDepartureDate()))
-            {
-                filteredList.add(flight);
+                if(from.equalsIgnoreCase(flight.getDepartureCity()) && to.equalsIgnoreCase(flight.getArrivalCity())
+                        && date.isEqual(flight.getDepartureDate()))
+                {
+                    filteredList.add(flight);
+                }
             }
         }
+
+
 
         mav = new ModelAndView("redirect:searchFlightResult");
         return mav;
