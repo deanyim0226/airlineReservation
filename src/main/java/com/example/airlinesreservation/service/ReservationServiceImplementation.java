@@ -142,6 +142,8 @@ public class ReservationServiceImplementation implements ReservationService{
         return null;
     }
     /*
+    USING JPA
+
     @Autowired
     ReservationRepository reservationRepository;
 

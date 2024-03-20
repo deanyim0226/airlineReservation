@@ -21,9 +21,7 @@
         }
 
     </style>
-
 </head>
-
 <body>
 <header>
     <nav class="navbar bg-dark border-bottom border-body">
@@ -46,24 +44,64 @@
     </nav>
 </header>
 
-<div align="center">
-    <!--
-    <s:authorize access="isAuthenticated()">
+<br>
+<br>
+<div class="container-fluid" align="center">
+    <h1>FLIGHT RECORD</h1>
+    <table class="table table-dark table-striped">
+        <tr>
+            <th>FLIGHT-ID</th>
+            <th>FLIGHT-NUMBER</th>
+            <th>AIRLINE</th>
+            <th>DEPARTURE</th>
+            <th>ARRIVAL</th>
+            <th>DEPARTURE-DATE</th>
+            <th>DEPARTURE-TIME</th>
+            <th>ARRIVAL-DATE</th>
+            <th>ARRIVAL-TIME</th>
+            <th>CAPACITY</th>
+            <th>PRICE</th>
+            <th>BOOKED-SEATS</th>
+            <th>ACTION</th>
+            <th><a href="flightForm">Back</a></th>
+        </tr>
 
-        <br> Principal: <s:authentication property="principal"/>
-        <br> User: <s:authentication property="principal.username"/>
-        <br> Password: <s:authentication property="principal.password"/>
-        <br> Enabled: <s:authentication property="principal.enabled"/>
-        <br> AccountNonExpired: <s:authentication property="principal.accountNonExpired"/>
-        <br> CredentialIsNonExpired: <s:authentication property="principal.credentialsNonExpired"/>
-        <br> AccountNonLocked: <s:authentication property="principal.AccountNonLocked"/>
-        <br> Granted Authorities: <s:authentication property="principal.authorities"/>
+        <c:forEach items="${flights}" var="flight">
+            <tr>
+                <td>${flight.getFlightId()}</td>
+                <td>${flight.getFlightNumber()}</td>
+                <td>${flight.getFlightAirline().getAirlineName()}</td>
+                <td>${flight.getDepartureCity()}</td>
+                <td>${flight.getArrivalCity()}</td>
+                <td>${flight.getDepartureDate()}</td>
+                <td>${flight.getDepartureTime()}</td>
+                <td>${flight.getArrivalDate()}</td>
+                <td>${flight.getArrivalTime()}</td>
+                <td>${flight.getFlightCapacity()}</td>
+                <td>${flight.getFlightPrice()}</td>
+                <td>${flight.getFlightSeatsBooked()}</td>
+                <td><a href="writeFlight?flightId=${flight.getFlightId()}">UPDATE</a></td>
+                <td><a href="deleteFlight?flightId=${flight.getFlightId()}">DELETE</a></td>
+            </tr>
+        </c:forEach>
+    </table>
 
-        <br> loggedInuser: ${loggedInuser}
-        <br>
-        <a href="/logout"> Logout</a>
-    </s:authorize>
-    -->
+    <c:set var="noOfPages" value="${totalPages}"></c:set>
+    <c:set var="sortedBy" value="${sortedBy}"></c:set>
+    <c:set var="pageSize" value="${pageSize}"></c:set>
+
+    <%
+        for(int i =0; i < (int) pageContext.getAttribute("noOfPages"); i++){
+            out.println("<a href=\"pagedFlight?pageNo="+i
+                    + "&pageSize="+request.getAttribute("pageSize")
+                    +"&sortedBy="+request.getAttribute("sortedBy")
+                    +"\">"
+                    +i
+                    +
+                    "</a>");
+        }
+    %>
 </div>
+
 </body>
 </html>

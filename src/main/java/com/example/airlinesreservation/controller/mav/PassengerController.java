@@ -5,9 +5,14 @@ import com.example.airlinesreservation.domain.Passenger;
 import com.example.airlinesreservation.service.PassengerService;
 import com.example.airlinesreservation.validation.PassengerValidator;
 import jakarta.validation.Valid;
+import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -40,6 +45,25 @@ public class PassengerController {
 
         mav.addObject("genders", Gender.values());
         mav.addObject("passengers", passengerService.findAll());
+        mav.addObject("sortedBy", List.of("FirstName", "LastName","Email","Gender","DOB"));
+        return mav;
+    }
+
+    @RequestMapping(value = "/pagedPassengers")
+    public ModelAndView findPassengers(@RequestParam int pageNo, @RequestParam int pageSize, @RequestParam(required=false) String sortedBy){
+
+        ModelAndView mav = new ModelAndView("pagedPassengers");
+        Pageable pageable = null;
+
+        pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortedBy));
+        Page<Passenger> pagedPassengers = passengerService.findPassengers(pageable);
+        List<Passenger> passengerList = pagedPassengers.getContent();
+
+        mav.addObject("passengers", passengerList);
+        mav.addObject("totalPages", pagedPassengers.getTotalPages());
+        mav.addObject("pageSize", pageSize);
+        mav.addObject("sortedBy", sortedBy);
+
         return mav;
     }
 
@@ -135,7 +159,7 @@ public class PassengerController {
         mav.addObject("passenger",retrievedPassenger);
         mav.addObject("genders",Gender.values());
         mav.addObject("passengers",passengerService.findAll());
-
+        mav.addObject("sortedBy", List.of("FirstName", "LastName","Email","Gender","DOB"));
         return mav;
     }
 

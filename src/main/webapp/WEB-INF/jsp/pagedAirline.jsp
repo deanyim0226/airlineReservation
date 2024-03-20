@@ -21,16 +21,6 @@
         }
 
     </style>
-    <script>
-        $(document).ready(function(){
-            $("#selection").change(function(){
-                let selected = $(this).val()
-                let pageNo = 0
-                let pageSize = 5
-                window.location.replace("pagedAirline?pageNo="+pageNo+"&pageSize="+pageSize +"&sortedBy="+selected)
-            })
-        })
-    </script>
 </head>
 <body>
 <header>
@@ -55,59 +45,7 @@
 </header>
 
 <br>
-<div class="booking-form-w3layouts">
-    <!-- Form starts here -->
-    <f:form modelAttribute="airline" method="post" action="saveAirline">
-        <h2 class="sub-heading-agileits">AIRLINE FORM</h2>
 
-        <div class="main-flex-w3ls-sectns">
-            <div class="field-agileinfo-spc form-w3-agile-text1">
-                <label>AIRLINE-ID</label>
-                <f:input path="airlineId"/>
-                <c:if test="${hasError}">
-                    <f:errors path="airlineId"></f:errors>
-                </c:if>
-            </div>
-
-
-        </div>
-        <div class="main-flex-w3ls-sectns">
-            <div class="field-agileinfo-spc form-w3-agile-text2">
-                <label>AIRLINE-CODE</label>
-                <f:input path="airlineCode"/>
-                <c:if test="${hasError}">
-                    <f:errors path="airlineCode"></f:errors>
-                </c:if>
-            </div>
-            <div class="field-agileinfo-spc form-w3-agile-text1">
-                <label>NAME</label>
-                <f:input path="airlineName"/>
-                <c:if test="${hasError}">
-                    <f:errors path="airlineName"></f:errors>
-                </c:if>
-            </div>
-
-        </div>
-        <div class="clear"></div>
-        <div class="row">
-            <div class="col-6">
-                <input id="save-airport" type="submit" value="Submit">
-                <input formaction="updateAirline" type="submit" value="Update">
-            </div>
-            <div class="col-6">
-                <label>sortedBy</label>
-                <select id="selection">
-                    <c:forEach items="${sortedBy}" var="sort">
-                        <option>${sort}</option>
-                    </c:forEach>
-                </select>
-            </div>
-        </div>
-
-        <div class="clear"></div>
-
-    </f:form>
-</div>
 <br>
 <div class="container-fluid" align="center">
     <table class="table table-dark table-striped">
@@ -116,9 +54,8 @@
             <th>NAME</th>
             <th>AIRLINE-CODE</th>
 
-            <th colspan="2">
-                ACTION
-            </th>
+            <th>ACTION</th>
+            <th><a href="airlineForm">Back</a></th>
         </tr>
         <c:forEach items="${airlines}" var="airline">
 
@@ -133,6 +70,22 @@
         </c:forEach>
 
     </table>
+
+    <c:set var="noOfPage" value="${totalPages}"></c:set>
+    <c:set var="pageSize" value="${pageSize}"></c:set>
+    <c:set var="sortedBy" value="${sortedBy}"></c:set>
+
+    <%
+        for(int i =0; i < (int) pageContext.getAttribute("noOfPage"); i++){
+            out.println("<a href=\"pagedAirline?pageNo="+i
+                    + "&pageSize="+request.getAttribute("pageSize")
+                    +"&sortedBy="+request.getAttribute("sortedBy")
+                    +"\">"
+                    +i
+                    +
+                    "</a>");
+        }
+    %>
 </div>
 </body>
 </html>

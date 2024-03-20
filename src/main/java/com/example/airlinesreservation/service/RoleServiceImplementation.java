@@ -18,6 +18,10 @@ public class RoleServiceImplementation implements RoleService {
 
     @Autowired
     SessionFactory sessionFactory;
+
+    @Autowired
+    RoleRepository roleRepository;
+
     @Override
     public List<Role> findAll() {
         List<Role> roles = null;
@@ -159,9 +163,8 @@ public class RoleServiceImplementation implements RoleService {
     }
 
     /*
-    @Autowired
-    RoleRepository roleRepository;
 
+    USING JPA
 
     @Override
     public List<Role> findAll() {

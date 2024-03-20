@@ -6,6 +6,10 @@ import com.example.airlinesreservation.service.UserService;
 import com.example.airlinesreservation.validation.UserValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -41,9 +45,26 @@ public class UserController {
 
         mav.addObject("roles", roleService.findAll());
         mav.addObject("users", userService.findAll());
+        mav.addObject("sortedBy", List.of("UserId","Username","Email","MobileNo"));
         return mav;
     }
 
+    @RequestMapping(value = "pagedUser")
+    public ModelAndView pagedUser(@RequestParam int pageNo, @RequestParam int pageSize, @RequestParam(required = false) String sortedBy){
+        ModelAndView mav = new ModelAndView("pagedUser");
+
+        Pageable pageable = null;
+        pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortedBy));
+        Page<User> pagedUser = userService.findUsers(pageable);
+        List<User> userList = pagedUser.getContent();
+
+        mav.addObject("users",userList);
+        mav.addObject("sortedBy",sortedBy);
+        mav.addObject("totalPages",pagedUser.getTotalPages());
+        mav.addObject("pageSize" , pageSize);
+
+        return mav;
+    }
 
     @RequestMapping(value = "/saveUser")
     public ModelAndView saveUser(@Valid @ModelAttribute User user, BindingResult br){

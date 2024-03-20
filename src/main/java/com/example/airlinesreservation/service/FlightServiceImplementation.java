@@ -6,6 +6,8 @@ import com.example.airlinesreservation.domain.Flight;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
@@ -118,8 +120,15 @@ public class FlightServiceImplementation implements FlightService{
         return null;
     }
 
+    @Override
+    public Page<Flight> findFlights(Pageable pageable) {
+        return flightRepository.findAll(pageable);
+    }
+
 
     /*
+    USING JPA
+
     @Override
     public Flight saveFlight(Flight flight) {
         return flightRepository.save(flight);

@@ -6,6 +6,10 @@ import com.example.airlinesreservation.service.AirportService;
 import com.example.airlinesreservation.validation.AirportValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -37,8 +41,31 @@ public class AirportController {
     public ModelAndView airportForm(Airport airport){
         ModelAndView mav = new ModelAndView("airportForm");
 
-
+        mav.addObject("sortedBy", List.of("AirportId","AirportCode","AirportName", "AirportCity"));
         mav.addObject("airports", airportService.getAll());
+        return mav;
+    }
+
+    @RequestMapping(value = "/pagedAirport")
+    public ModelAndView pagedAirports(@RequestParam int pageNo, @RequestParam int pageSize, @RequestParam(required=false) String sortedBy){
+        ModelAndView mav = new ModelAndView("pagedAirport");
+
+        Pageable pageable = null;
+        pageable = PageRequest.of(pageNo,pageSize,Sort.by(sortedBy));
+
+        Page<Airport> pagedAirports = airportService.findAirports(pageable);
+        List<Airport> airportList = pagedAirports.getContent();
+
+        for(Airport airport : airportList){
+            System.out.println(airport.getAirportName());
+        }
+
+
+        mav.addObject("airports", airportList);
+        mav.addObject("totalPages", pagedAirports.getTotalPages());
+        mav.addObject("pageSize", pageSize);
+        mav.addObject("sortedBy",sortedBy);
+
         return mav;
     }
 

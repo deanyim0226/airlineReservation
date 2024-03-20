@@ -5,8 +5,15 @@ import com.example.airlinesreservation.domain.Flight;
 import com.example.airlinesreservation.service.AirlineService;
 import com.example.airlinesreservation.service.FlightService;
 import com.example.airlinesreservation.validation.FlightValidator;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -17,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -42,8 +51,28 @@ public class FlightController {
         ModelAndView mav = new ModelAndView("flightForm");
         List<Airline> airlineList = airlineService.getAll();
 
+
         mav.addObject("flights",flightService.getAll());
         mav.addObject("availableAirlines", airlineList);
+        mav.addObject("sortedBy",List.of("FlightId","FlightNumber","FlightAirline","DepartureCity","ArrivalCity", "DepartureDate","DepartureTime",
+                "ArrivalDate","ArrivalTime","FlightCapacity","FlightPrice", "FlightSeatsBooked"));
+        return mav;
+    }
+
+    @RequestMapping(value = "pagedFlight")
+    public ModelAndView pagedFlight(@RequestParam int pageNo, @RequestParam int pageSize, @RequestParam(required = false) String sortedBy){
+        ModelAndView mav = new ModelAndView("pagedFlight");
+
+        Pageable pageable = null;
+        pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortedBy));
+        Page<Flight> pagedFlight = flightService.findFlights(pageable);
+        List<Flight> flightList = pagedFlight.getContent();
+
+        mav.addObject("flights",flightList);
+        mav.addObject("totalPages", pagedFlight.getTotalPages());
+        mav.addObject("pageSize",pageSize);
+        mav.addObject("sortedBy",sortedBy);
+
         return mav;
     }
 

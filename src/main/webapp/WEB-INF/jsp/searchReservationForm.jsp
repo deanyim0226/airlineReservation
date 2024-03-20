@@ -379,7 +379,11 @@
     </style>
     <script>
         $(document).ready(function(){
+            $("#search-all").click(function(){
 
+                window.location.replace("searchReservationAll")
+                return false;
+            })
             $("#book").click(function(){
                 let flightId = $("#book").attr("data-flight-id")
                 $("#flight-id").val(flightId);
@@ -442,6 +446,9 @@
         </div>
         <div class="main-flex-w3ls-sectns">
             <input id="search-flight" type="submit" value="Find Reservation">
+            <s:authorize access="hasAuthority('Admin')">
+            <input id="search-all" type="submit" value="View All">
+            </s:authorize>
         </div>
 
     </f:form>

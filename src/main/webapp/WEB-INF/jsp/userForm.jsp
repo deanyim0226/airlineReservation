@@ -21,6 +21,30 @@
     </style>
     <script>
         $(document).ready(function(){
+
+            $("#username").click(function(){
+                let selected ="username"
+                let pageNo = 0
+                let pageSize = 5
+
+                window.location.replace("pagedUser?pageNo="+pageNo+"&pageSize="+pageSize +"&sortedBy="+selected)
+            })
+
+            $("#email").click(function(){
+                let selected ="email"
+                let pageNo = 0
+                let pageSize = 5
+
+                window.location.replace("pagedUser?pageNo="+pageNo+"&pageSize="+pageSize +"&sortedBy="+selected)
+            })
+
+            $("#mobile").click(function(){
+                let selected ="mobileNo"
+                let pageNo = 0
+                let pageSize = 5
+
+                window.location.replace("pagedUser?pageNo="+pageNo+"&pageSize="+pageSize +"&sortedBy="+selected)
+            })
             $("#addUser").click(function(){
                 $("#modal_userId").val("")
                 $("#modal_email").val("")
@@ -117,11 +141,11 @@
         <h1>USER RECORD</h1>
         <table class="table table-dark table-striped">
             <tr>
-                <th>USER-ID</th>
-                <th>USERNAME</th>
+                <th><a id="id">USER-ID</a></th>
+                <th><a id="username">USERNAME</a></th>
                 <th>PASSWORD</th>
-                <th>EMAIL</th>
-                <th>MOBILE-NO</th>
+                <th><a id="email">EMAIL</a></th>
+                <th><a id="mobile">MOBILE-NO</a></th>
                 <th >ACTION</th>
                 <th><button class="btn btn-success" id="addUser">ADD</button></th>
             </tr>
@@ -139,6 +163,7 @@
             </c:forEach>
 
         </table>
+
     </div>
 </body>
 </html>

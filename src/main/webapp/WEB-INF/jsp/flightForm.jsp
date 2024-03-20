@@ -21,6 +21,19 @@
         }
 
     </style>
+    <script>
+        $(document).ready(function(){
+            $("#selection").change(function(){
+
+                let selected = $(this).val()
+                let pageNo = 0
+                let pageSize = 5
+
+                window.location.replace("pagedFlight?pageNo="+pageNo+"&pageSize="+pageSize +"&sortedBy="+selected)
+
+            })
+        })
+    </script>
 </head>
 <body>
 <header>
@@ -155,8 +168,23 @@
         </div>
 
         <div class="clear"></div>
-        <input id="save-passenger" type="submit" value="SAVE">
-        <input formaction="updateFlight" type="submit" value="UPDATE">
+        <div class="row">
+            <div class="col-6">
+                <input id="save-passenger" type="submit" value="SAVE">
+                <input formaction="updateFlight" type="submit" value="UPDATE">
+
+            </div>
+            <div class="col-6">
+                <label>sortedBy</label>
+                <select id="selection">
+                    <c:forEach items="${sortedBy}" var="item">
+                        <option>
+                            ${item}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
 
         <div class="clear"></div>
     </f:form>

@@ -125,36 +125,36 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <f:form action="saveReservation" method="POST" modelAttribute="reservation">
-                    <tr>
-                        <td>Flight-ID</td>
-                        <td><f:input readonly="true" id="flight-id" class="form-control" path="flight.flightId"/></td>
-                    </tr>
-                    <tr>
-                        <td>FIRSTNAME</td>
-                        <td><f:input class="form-control" path="passenger.firstName"/></td>
-                    </tr>
-                    <tr>
-                        <td>LASTNAME</td>
-                        <td><f:input class="form-control" path="passenger.lastName"/></td>
-                    </tr>
-                    <tr>
-                        <td>EMAIL</td>
-                        <td><f:input class="form-control" path="passenger.email"/></td>
-                    </tr>
-                    <tr>
-                        <td>GENDER</td>
-                        <td>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            Flight-ID
+                            <f:input readonly="true" id="flight-id" class="form-control" path="flight.flightId"/>
+                        </div>
+                        <div class="col-md-6">
+                            FirstName<f:input class="form-control" path="passenger.firstName"/>
+                        </div>
+
+                        <div class="col-md-6">
+                            LASTNAME<f:input class="form-control" path="passenger.lastName"/>
+                        </div>
+                        <div class="col-12">
+                            EMAIL
+                            <f:input class="form-control" path="passenger.email"/>
+                        </div>
+                        <div class="col-md-6">
+                            GENDER
                             <f:select class="form-control" path="passenger.gender">
                                 <c:forEach items="${genders}" var="gender">
                                     <f:option class="form-control"  value="${gender}"></f:option>
                                 </c:forEach>
                             </f:select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>DOB</td>
-                        <td><f:input class="form-control" type="date" path="passenger.DOB"/></td>
-                    </tr>
+                        </div>
+                        <div class="col-md-6">
+                            DOB
+                            <f:input class="form-control" type="date" path="passenger.DOB"/>
+                        </div>
+
+                    </div>
                     <br>
                     <div class="row g-3">
 

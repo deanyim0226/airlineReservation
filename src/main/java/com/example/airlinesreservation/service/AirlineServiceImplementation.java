@@ -6,6 +6,8 @@ import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +18,11 @@ public class AirlineServiceImplementation implements AirlineService{
     @Autowired
     SessionFactory sessionFactory;
 
+    @Autowired
+    AirlineRepository airlineRepository;
+
     @Override
     public Airline saveAirline(Airline airline) {
-
-
 
         try(Session session = sessionFactory.openSession();){
             session.beginTransaction();
@@ -109,11 +112,15 @@ public class AirlineServiceImplementation implements AirlineService{
         return null;
     }
 
+    @Override
+    public Page<Airline> findAirlines(Pageable pageable) {
+        return airlineRepository.findAll(pageable);
+    }
+
 
 
     /*
-    @Autowired
-    AirlineRepository airlineRepository;
+    USING JPA
 
     @Override
     public Airline saveAirline(Airline airline) {

@@ -8,6 +8,10 @@ import com.example.airlinesreservation.validation.AirlineValidator;
 import jakarta.validation.Valid;
 import org.eclipse.tags.shaded.org.apache.bcel.verifier.structurals.ControlFlowGraph;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -52,6 +56,24 @@ public class AirlineController {
 
 
         mav.addObject("airlines", airlineService.getAll());
+        mav.addObject("sortedBy", List.of("AirlineId","AirlineName","AirlineCode"));
+        return mav;
+    }
+
+    @RequestMapping(value = "/pagedAirline")
+    public ModelAndView findAirlines(@RequestParam int pageNo, @RequestParam int pageSize, @RequestParam(required = false) String sortedBy){
+        ModelAndView mav = new ModelAndView("pagedAirline");
+        Pageable pageable = null;
+        pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortedBy));
+
+        Page<Airline> pagedAirline = airlineService.findAirlines(pageable);
+        List<Airline> airlineList = pagedAirline.getContent();
+
+        mav.addObject("airlines", airlineList);
+        mav.addObject("sortedBy",sortedBy);
+        mav.addObject("pageSize", pageSize);
+        mav.addObject("totalPages", pagedAirline.getTotalPages());
+
         return mav;
     }
 

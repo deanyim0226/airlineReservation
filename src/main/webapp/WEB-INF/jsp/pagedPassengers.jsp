@@ -2,7 +2,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/style.css">
     <title>User Form</title>
+
     <style>
 
         body{
@@ -21,9 +21,7 @@
         }
 
     </style>
-
 </head>
-
 <body>
 <header>
     <nav class="navbar bg-dark border-bottom border-body">
@@ -46,24 +44,55 @@
     </nav>
 </header>
 
-<div align="center">
-    <!--
-    <s:authorize access="isAuthenticated()">
 
-        <br> Principal: <s:authentication property="principal"/>
-        <br> User: <s:authentication property="principal.username"/>
-        <br> Password: <s:authentication property="principal.password"/>
-        <br> Enabled: <s:authentication property="principal.enabled"/>
-        <br> AccountNonExpired: <s:authentication property="principal.accountNonExpired"/>
-        <br> CredentialIsNonExpired: <s:authentication property="principal.credentialsNonExpired"/>
-        <br> AccountNonLocked: <s:authentication property="principal.AccountNonLocked"/>
-        <br> Granted Authorities: <s:authentication property="principal.authorities"/>
+<div class="container-fluid" align="center">
+    <table class="table table-dark table-striped">
+        <tr>
+            <th>PASSENGER-ID</th>
+            <th>FIRSTNAME</th>
+            <th>LASTNAME</th>
+            <th>EMAIL</th>
+            <th>GENDER</th>
+            <th>DOB</th>
+            <th>ADDRESS</th>
+            <th>ACTION</th>
+            <th><a href="passengerForm">Back</a></th>
+        </tr>
 
-        <br> loggedInuser: ${loggedInuser}
-        <br>
-        <a href="/logout"> Logout</a>
-    </s:authorize>
-    -->
+        <c:forEach items="${passengers}" var="passenger">
+            <tr>
+                <td>${passenger.getPassengerId()}</td>
+                <td>${passenger.getFirstName()}</td>
+                <td>${passenger.getLastName()}</td>
+                <td>${passenger.getEmail()}</td>
+                <td>${passenger.getGender()}</td>
+                <td>${passenger.getDOB()}</td>
+                <td>                        ${passenger.getAddress().getAddressLine1()} ${passenger.getAddress().getAddressLine2()},
+                        ${passenger.getAddress().getCity()}, ${passenger.getAddress().getState()}, ${passenger.getAddress().getZipcode()}, ${passenger.getAddress().getCountry()}
+                </td>
+                <td><a href="generatePassenger?passengerId=${passenger.getPassengerId()}">UPDATE</a></td>
+                <td><a href="deletePassenger?passengerId=${passenger.getPassengerId()}">DELETE</a></td>
+            </tr>
+        </c:forEach>
+    </table>
+
+    <c:set var="noOfPages" value= "${totalPages}"></c:set>
+    <c:set var="sortedBy" value= "${sortedBy}"></c:set>
+    <c:set var="pageSize" value= "${pageSize}"></c:set>
+
+    <%
+        //http://localhost:8081/dinesh/pagedEmployees?pageNo=0&pageSize=5&sortedBy=name
+        for(int i=0; i< (int)pageContext.getAttribute("noOfPages"); i++){ // pageContext, out, request, response are some of jsp implict object
+            out.println("<a href=\"pagedPassengers?pageNo="+i
+                    + "&pageSize="+request.getAttribute("pageSize")
+                    +"&sortedBy="+request.getAttribute("sortedBy")
+                    +"\">"
+                    +i
+                    +
+                    "</a>");
+        }
+    %>
 </div>
+
 </body>
 </html>

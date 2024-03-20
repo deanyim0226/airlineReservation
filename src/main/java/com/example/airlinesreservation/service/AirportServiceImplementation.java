@@ -7,6 +7,8 @@ import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,8 @@ public class AirportServiceImplementation implements AirportService{
     @Autowired
     SessionFactory sessionFactory;
 
+    @Autowired
+    AirportRepository airportRepository;
 
     @Override
     public Airport saveAirport(Airport airport) {
@@ -132,9 +136,13 @@ public class AirportServiceImplementation implements AirportService{
         return null;
     }
 
+    @Override
+    public Page<Airport> findAirports(Pageable pageable) {
+        return airportRepository.findAll(pageable);
+    }
+
     /*
-    @Autowired
-    AirportRepository airportRepository;
+    USING JPA
 
     @Override
     public Airport saveAirport(Airport airport) {

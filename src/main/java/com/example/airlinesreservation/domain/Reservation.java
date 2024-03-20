@@ -16,7 +16,6 @@ public class Reservation {
 
 
     @Id
-
     private Long reservationNumber;
 
     @OneToOne

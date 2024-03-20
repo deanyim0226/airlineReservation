@@ -41,13 +41,19 @@ public class SearchController {
         binder.addValidators(searchValidator);
     }
 
+
+    @RequestMapping("/searchReservationAll")
+    public ModelAndView searchReservationAll(Reservation reservation){
+        List<Reservation> reservationList = reservationService.getAll();
+
+        ModelAndView mav = new ModelAndView("searchReservationAll");
+        mav.addObject("reservations", reservationList);
+        return mav;
+    }
     @RequestMapping("/searchReservationResult")
     public ModelAndView searchReservationResult(Search search, Reservation reservation){
         ModelAndView mav = new ModelAndView("searchReservationResult");
-
-
         mav.addObject("reservations", foundReservationList);
-
         return mav;
     }
     @RequestMapping("/searchReservation")
@@ -79,6 +85,7 @@ public class SearchController {
 
             }else if(email.equalsIgnoreCase(passenger.getEmail())){
                 foundReservationList.add(rev);
+
                 //based on email
             }
 
